@@ -1,6 +1,8 @@
 #ifndef PRODUCER_H
 #define PRODUCER_H
 
+#include "calendar.h"
+
 namespace mss
 {
   namespace base
@@ -8,7 +10,10 @@ namespace mss
     class Producer
     {
     public:
-      Producer();
+      Producer(size_t id = 0);
+      CalendarEntry generate();
+    private:
+      size_t id_;
     };
   }
 }

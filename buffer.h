@@ -12,9 +12,19 @@ namespace mss
     class Buffer
     {
     public:
-      Buffer();
+      Buffer(size_t capacity);
+
+      bool isIndexValid(size_t index);
+      size_t getServiceBidIndex();
+      size_t getRejectBidIndex(CalendarEntry entry);
+      bool addBid(CalendarEntry entry);
     private:
-      std::vector< base::CalendarEntry > buffer;
+      std::vector< std::pair< bool, base::CalendarEntry > > buffer_;
+      size_t index_ptr_;
+
+      size_t selectPlace();
+      size_t selectServiceBid();
+      size_t selectRejectBid();
     };
   }
 }

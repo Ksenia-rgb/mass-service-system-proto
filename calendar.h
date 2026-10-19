@@ -11,6 +11,7 @@ namespace mss
   {
     struct CalendarEntry
     {
+      size_t id;
       QDateTime time;
       bool type;
     };
@@ -19,9 +20,13 @@ namespace mss
     {
     public:
       Calendar(size_t produce_cnt, size_t device_cnt);
-      CalendarEntry next();
+
+      bool isIndexValid(size_t index);
+      size_t next();
+      CalendarEntry get(size_t index);
+      bool set(size_t index, QDateTime time);
     private:
-      std::vector< CalendarEntry > calendar;
+      std::vector< CalendarEntry > calendar_;
     };
   }
 }

@@ -7,11 +7,9 @@ CONFIG += c++17 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        analyser-event.cpp \
         buffer.cpp \
-        determiner-next-event.cpp \
+        calendar.cpp \
         device.cpp \
-        event-mod.cpp \
         main.cpp \
         producer.cpp \
         system.cpp
@@ -25,11 +23,8 @@ DISTFILES += \
     README.md
 
 HEADERS += \
-    analyser-event.h \
     buffer.h \
     calendar.h \
-    determiner-next-event.h \
     device.h \
-    event-mod.h \
     producer.h \
     system.h
