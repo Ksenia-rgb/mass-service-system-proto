@@ -1,34 +1,42 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
-#include <QDateTime>
+#include <deque>
 
-#include "calendar.h"
+#include "calendarentry.h"
+#include "msstime.h"
 
 namespace mss
 {
   namespace base
   {
-    struct Device
+    struct Device: CalendarEntry
     {
-      CalendarEntry entry;
-      QDateTime time_free;
+      CalendarEntry bid;
 
-      bool isFree(QDateTime system_time);
+      Device();
+      std::ostream& print(std::ostream& out) override;
+
+      bool isFree(MssTime system_time);
     };
 
     class DeviceGang
     {
     public:
-      DeviceGang(size_t size);
+      DeviceGang(size_t size, size_t prod_rate_per_hour);
 
-      bool setBid(CalendarEntry entry, QDateTime system_time);
+      size_t size();
+      const Device& get(size_t index) const;
+      Device& get(size_t index);
+
+      bool setBid(CalendarEntry bid, MssTime system_time);
     private:
-      std::vector< Device > gang_;
+      std::deque< Device > gang_;
       size_t index_ptr_;
+      size_t prod_rate_per_hour_;
 
-      size_t selectDevice(QDateTime system_time);
-      QDateTime getTimeFree(QDateTime system_time);
+      size_t selectDevice(MssTime system_time);
+      MssTime getTimeFree(MssTime system_time);
     };
   }
 }

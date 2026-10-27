@@ -1,19 +1,40 @@
 #ifndef PRODUCER_H
 #define PRODUCER_H
 
-#include "calendar.h"
+#include <deque>
+
+#include "msstime.h"
+#include "calendarentry.h"
 
 namespace mss
 {
   namespace base
   {
-    class Producer
+    struct Producer: CalendarEntry
+    {
+      size_t reject_cnt;
+
+      Producer();
+      std::ostream& print(std::ostream& out) override;
+    };
+
+    class ProducerGang
     {
     public:
-      Producer(size_t id = 0);
-      CalendarEntry generate();
+      ProducerGang(size_t size, size_t gen_start_time, size_t gen_finish_time);
+
+      size_t size();
+      const Producer& get(size_t index) const;
+      Producer& get(size_t index);
+
+      MssTime generateNextBid(size_t index, MssTime system_time);
+      void reject(size_t index);
     private:
-      size_t id_;
+      std::deque< Producer > gang_;
+      size_t gen_start_time_;
+      size_t gen_finish_time_;
+
+      MssTime getTimeIncomeBid();
     };
   }
 }

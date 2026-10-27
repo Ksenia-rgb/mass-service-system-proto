@@ -14,12 +14,17 @@ namespace mss
     public:
       Buffer(size_t capacity);
 
-      bool isIndexValid(size_t index);
-      size_t getServiceBidIndex();
-      size_t getRejectBidIndex(CalendarEntry entry);
+      size_t size();
+      const CalendarEntry& get(size_t index) const;
+      CalendarEntry& get(size_t index);
+
       bool addBid(CalendarEntry entry);
+      size_t getServiceBidIndex();
+      size_t getRejectBidId(CalendarEntry entry);
+
+      std::ostream& print(std::ostream& out);
     private:
-      std::vector< std::pair< bool, base::CalendarEntry > > buffer_;
+      std::vector< std::pair< bool, CalendarEntry > > buffer_;
       size_t index_ptr_;
 
       size_t selectPlace();

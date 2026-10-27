@@ -1,10 +1,7 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <QDateTime>
-
 #include <cstddef>
-#include <vector>
 
 #include "buffer.h"
 #include "calendar.h"
@@ -13,26 +10,38 @@
 
 namespace mss
 {
+  struct SystemConfig
+  {
+    size_t produce_cnt;
+    size_t device_cnt;
+    size_t buffer_cap;
+    size_t gen_start_time, gen_finish_time;
+    size_t prod_rate_per_hour;
+  };
   class System
   {
   public:
-    System(size_t produce_cnt, size_t device_cnt, size_t buffer_cap);
+    System(const SystemConfig& config);
 
-    size_t determineNextEvent();
-    void analyseEvent(size_t index);
-    void eventModIncomeBid(size_t index);
-    void eventModFreeDevice(size_t index);
-    void eventModEnd(size_t index);
+    void step();
+    void end();
+
+    std::pair< size_t, base::CalendarEntry > determineNextEvent();
+    void analyseEvent(size_t index, base::CalendarEntry entry);
+    void eventModIncomeBid(size_t index, base::CalendarEntry entry);
+    void eventModFreeDevice();
+    void eventModEnd();
   private:
-    QDateTime time_now_;
-    size_t produce_cnt_, device_cnt_, buffer_cap_;
+    base::MssTime system_time_;
+    bool is_end_;
 
-    base::Calendar calendar_;
-    std::vector< base::Producer > prods_;
+    base::ProducerGang prods_;
     base::DeviceGang devices_;
     base::Buffer buffer_;
 
-    QDateTime getTimeIncomeBid();
+    base::Calendar calendar_;
+
+    std::ostream& print(std::ostream& out);
   };
 }
 

@@ -9,8 +9,10 @@ CONFIG += c++17 cmdline
 SOURCES += \
         buffer.cpp \
         calendar.cpp \
+        calendarentry.cpp \
         device.cpp \
         main.cpp \
+        msstime.cpp \
         producer.cpp \
         system.cpp
 
@@ -25,6 +27,8 @@ DISTFILES += \
 HEADERS += \
     buffer.h \
     calendar.h \
+    calendarentry.h \
     device.h \
+    msstime.h \
     producer.h \
     system.h

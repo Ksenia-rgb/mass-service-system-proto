@@ -3,30 +3,28 @@
 
 #include <vector>
 
-#include <QDateTime>
+#include "msstime.h"
+#include "calendarentry.h"
+#include "device.h"
+#include "producer.h"
 
 namespace mss
 {
   namespace base
   {
-    struct CalendarEntry
-    {
-      size_t id;
-      QDateTime time;
-      bool type;
-    };
-
     class Calendar
     {
     public:
-      Calendar(size_t produce_cnt, size_t device_cnt);
+      Calendar(ProducerGang& prods, DeviceGang& devices, MssTime system_time);
 
-      bool isIndexValid(size_t index);
       size_t next();
+
       CalendarEntry get(size_t index);
-      bool set(size_t index, QDateTime time);
+
+      std::ostream& print(std::ostream& out);
     private:
-      std::vector< CalendarEntry > calendar_;
+      std::vector< CalendarEntry* > calendar_;
+      std::unique_ptr< CalendarEntry > end_entry_;
     };
   }
 }
