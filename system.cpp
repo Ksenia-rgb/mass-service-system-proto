@@ -86,7 +86,7 @@ void mss::System::eventModIncomeBid(size_t index, base::CalendarEntry entry)
   }
 
   size_t reject_id = buffer_.getRejectBidId(entry);
-  prods_.reject(reject_id);
+  prods_.reject(reject_id - 1);
   return;
 }
 
