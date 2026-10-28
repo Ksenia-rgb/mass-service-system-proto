@@ -1,13 +1,21 @@
-#include <iostream>
+#include <QGuiApplication>
+#include <QtQml/QQmlApplicationEngine>
 
-#include <QCoreApplication>
+#include <iostream>
 
 #include "system.h"
 
 
-int main()
+int main(int argc, char* argv[])
 {
-  mss::SystemConfig config;
+  QGuiApplication app(argc, argv);
+
+  QQmlApplicationEngine engine;
+  const QUrl url("qrc:/qml/main.qml");
+  engine.load(url);
+  return app.exec();
+
+  /*mss::SystemConfig config;
   std::cin >>
     config.produce_cnt >>
     config.device_cnt >>
@@ -29,5 +37,5 @@ int main()
   {
     system.step();
   }
-  system.end();
+  system.end();*/
 }
