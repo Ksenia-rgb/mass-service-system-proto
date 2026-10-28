@@ -7,14 +7,14 @@ CONFIG += c++17 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        buffer.cpp \
-        calendar.cpp \
-        calendarentry.cpp \
-        device.cpp \
-        main.cpp \
-        msstime.cpp \
-        producer.cpp \
-        system.cpp
+        backend/system/buffer.cpp \
+        backend/system/calendar.cpp \
+        backend/system/calendarentry.cpp \
+        backend/system/device.cpp \
+        backend/system/msstime.cpp \
+        backend/system/producer.cpp \
+        backend/system/system.cpp \
+        main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -25,10 +25,10 @@ DISTFILES += \
     README.md
 
 HEADERS += \
-    buffer.h \
-    calendar.h \
-    calendarentry.h \
-    device.h \
-    msstime.h \
-    producer.h \
-    system.h
+    backend/system/buffer.h \
+    backend/system/calendar.h \
+    backend/system/calendarentry.h \
+    backend/system/device.h \
+    backend/system/msstime.h \
+    backend/system/producer.h \
+    backend/system/system.h
