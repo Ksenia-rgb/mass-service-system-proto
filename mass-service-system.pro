@@ -9,14 +9,14 @@ CONFIG += c++17 cmdline
 RESOURCES += qml.qrc
 
 SOURCES += \
-        buffer.cpp \
-        calendar.cpp \
-        calendarentry.cpp \
-        device.cpp \
-        main.cpp \
-        msstime.cpp \
-        producer.cpp \
-        system.cpp
+        backend/system/buffer.cpp \
+        backend/system/calendar.cpp \
+        backend/system/calendarentry.cpp \
+        backend/system/device.cpp \
+        backend/system/msstime.cpp \
+        backend/system/producer.cpp \
+        backend/system/system.cpp \
+        main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -28,10 +28,10 @@ DISTFILES += \
     main.qml
 
 HEADERS += \
-    buffer.h \
-    calendar.h \
-    calendarentry.h \
-    device.h \
-    msstime.h \
-    producer.h \
-    system.h
+    backend/system/buffer.h \
+    backend/system/calendar.h \
+    backend/system/calendarentry.h \
+    backend/system/device.h \
+    backend/system/msstime.h \
+    backend/system/producer.h \
+    backend/system/system.h
