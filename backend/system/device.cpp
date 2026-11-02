@@ -1,30 +1,29 @@
 #include "device.h"
 
-#include <random>
-#include <iomanip>
-
 #include "msstime.h"
+#include "distribution.h"
 
 mss::base::Device::Device():
   CalendarEntry(),
-  bid()
+  bid(),
+  time_use()
 {}
-
-std::ostream& mss::base::Device::print(std::ostream& out)
-{
-  out << id << '\t' << std::fixed << std::setprecision(3) << time.time_sec << "\t\t" << type;
-  return out << '\t' << bid.id << '\t' << std::fixed << std::setprecision(3) << bid.time.time_sec;
-}
 
 bool mss::base::Device::isFree(MssTime system_time)
 {
-  return time.isNull() || time < system_time;
+  return time.isNull() || time <= system_time;
 }
 
-mss::base::DeviceGang::DeviceGang(size_t size, size_t prod_rate_per_hour):
-  gang_(size),
-  index_ptr_(0),
-  prod_rate_per_hour_(prod_rate_per_hour)
+std::ostream& mss::base::Device::print(std::ostream& out)
+{
+  CalendarEntry::print(out);
+  return out << '\t' << bid.id << '\t' << bid.time << '\t' << time_use.time_sec;
+}
+
+mss::base::DeviceGang::DeviceGang(const DeviceConfig& config):
+  config_(config),
+  gang_(config.cnt, Device{}),
+  index_ptr_(0)
 {}
 
 size_t mss::base::DeviceGang::size()
@@ -32,31 +31,29 @@ size_t mss::base::DeviceGang::size()
   return gang_.size();
 }
 
-const mss::base::Device& mss::base::DeviceGang::get(size_t index) const
+mss::base::Device& mss::base::DeviceGang::operator[](size_t index)
 {
   return gang_[index];
 }
 
-mss::base::Device& mss::base::DeviceGang::get(size_t index)
-{
-  return gang_[index];
-}
-
-bool mss::base::DeviceGang::setBid(CalendarEntry bid, MssTime system_time)
+mss::base::MssTime mss::base::DeviceGang::setBid(CalendarEntry bid, MssTime system_time)
 {
   // Поставить заявку на обслуживание на один из приборов
 
   size_t index = selectDevice(system_time);
   if (index >= gang_.size())
   {
-    return false;
+    return {};
   }
 
+  MssTime time_service = getTimeService();
+
   Device& device = gang_[index];
-  device.bid = bid;
-  device.time = getTimeFree(system_time);
+  device.time = system_time + time_service;
   device.type = true;
-  return true;
+  device.bid = bid;
+  device.time_use += time_service;
+  return time_service;
 }
 
 size_t mss::base::DeviceGang::selectDevice(MssTime system_time)
@@ -81,16 +78,23 @@ size_t mss::base::DeviceGang::selectDevice(MssTime system_time)
   return gang_.size();
 }
 
-mss::base::MssTime mss::base::DeviceGang::getTimeFree(MssTime system_time)
+double mss::base::DeviceGang::getAvgWorkload(MssTime system_time)
 {
-  // Экспоненциальный закон распределения времени обслуживания заявок на приборах
+  double time_sum = 0.0;
+  for (size_t i = 0; i < gang_.size(); i++)
+  {
+    time_sum += gang_[i].time_use.time_sec;
+  }
+  return time_sum / gang_.size() / system_time.time_sec;
+}
 
-  const double mu_per_sec = prod_rate_per_hour_ / 3600.0;
+mss::base::MssTime mss::base::DeviceGang::getTimeService()
+{
+  // Закон распределения времени обслуживания заявок на приборах (экспоненциальный)
 
-  std::random_device rd;
-  std::mt19937 rng(rd());
-  std::exponential_distribution< double > distrib(mu_per_sec);
-  double seconds = distrib(rng);
-
-  return system_time + MssTime{seconds};
+  if (config_.distrib_law == DistribLaw::Exp)
+  {
+    return distribution::getExpTime(config_.rate_per_hour);
+  }
+  return distribution::getUniformTime({config_.time_min}, {config_.time_max});
 }

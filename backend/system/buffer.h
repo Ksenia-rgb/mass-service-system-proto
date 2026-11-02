@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "calendarentry.h"
+#include "types.h"
 
 namespace mss
 {
@@ -12,24 +13,27 @@ namespace mss
     class Buffer
     {
     public:
-      Buffer(size_t capacity);
+      Buffer(const BufferConfig& config);
 
       size_t size();
-      const CalendarEntry& get(size_t index) const;
-      CalendarEntry& get(size_t index);
+      CalendarEntry get(size_t index);
 
       bool addBid(CalendarEntry entry);
       size_t getServiceBidIndex();
-      size_t getRejectBidId(CalendarEntry entry);
+      CalendarEntry getRejectBid(const CalendarEntry& entry);
 
       std::ostream& print(std::ostream& out);
     private:
+      BufferConfig config_;
       std::vector< std::pair< bool, CalendarEntry > > buffer_;
       size_t index_ptr_;
 
       size_t selectPlace();
       size_t selectServiceBid();
       size_t selectRejectBid();
+
+      // В буфере хранятся копии календарных записей, там только id, time, type
+      // В буфере надо зафиксировать заявку именно в тот момент, как она туда попала
     };
   }
 }

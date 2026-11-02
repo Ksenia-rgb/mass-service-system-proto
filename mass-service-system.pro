@@ -11,6 +11,7 @@ SOURCES += \
         backend/system/calendar.cpp \
         backend/system/calendarentry.cpp \
         backend/system/device.cpp \
+        backend/system/distribution.cpp \
         backend/system/msstime.cpp \
         backend/system/producer.cpp \
         backend/system/system.cpp \
@@ -29,6 +30,8 @@ HEADERS += \
     backend/system/calendar.h \
     backend/system/calendarentry.h \
     backend/system/device.h \
+    backend/system/distribution.h \
     backend/system/msstime.h \
     backend/system/producer.h \
-    backend/system/system.h
+    backend/system/system.h \
+    backend/system/types.h

@@ -2,6 +2,7 @@
 #define MSSTIME_H
 
 #include <QDateTime>
+#include <ios>
 
 namespace mss
 {
@@ -17,6 +18,7 @@ namespace mss
       bool isNull();
 
       void operator+=(const MssTime& a);
+      void operator-=(const MssTime& a);
     };
 
     bool operator==(const MssTime& a, const MssTime& b);
@@ -27,6 +29,9 @@ namespace mss
     bool operator<=(const MssTime& a, const MssTime& b);
 
     MssTime operator+(const MssTime& a, const MssTime& b);
+    MssTime operator-(const MssTime& a, const MssTime& b);
+
+    std::ostream& operator<<(std::ostream& out, const MssTime& a);
   }
 }
 
