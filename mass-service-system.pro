@@ -9,6 +9,7 @@ CONFIG += c++17 cmdline
 RESOURCES += qml.qrc
 
 SOURCES += \
+        backend/gui-controller/config-controller.cpp \
         backend/system/buffer.cpp \
         backend/system/calendar.cpp \
         backend/system/calendarentry.cpp \
@@ -28,6 +29,7 @@ DISTFILES += \
     main.qml
 
 HEADERS += \
+    backend/gui-controller/config-controller.h \
     backend/system/buffer.h \
     backend/system/calendar.h \
     backend/system/calendarentry.h \

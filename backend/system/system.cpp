@@ -4,6 +4,23 @@
 #include <iostream>
 #include <iomanip>
 
+mss::SystemConfig::SystemConfig():
+  produce_cnt(0),
+  device_cnt(0),
+  buffer_cap(0),
+  gen_start_time(0),
+  gen_finish_time(0),
+  prod_rate_per_hour(0)
+{}
+
+std::ostream& mss::SystemConfig::print(std::ostream& out)
+{
+  return out <<
+    "Producer Count: " << produce_cnt <<
+    "Device Count: " << device_cnt <<
+    "Buffer capacity: " << buffer_cap;
+}
+
 mss::System::System(const SystemConfig& config):
   system_time_(),
   is_end_(false),

@@ -17,6 +17,9 @@ namespace mss
     size_t buffer_cap;
     size_t gen_start_time, gen_finish_time;
     size_t prod_rate_per_hour;
+
+    SystemConfig();
+    std::ostream& print(std::ostream& out);
   };
   class System
   {

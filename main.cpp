@@ -1,16 +1,18 @@
 #include <QGuiApplication>
 #include <QtQml/QQmlApplicationEngine>
 
-#include <iostream>
 
 #include "backend/system/system.h"
+#include "backend/gui-controller/config-controller.h"
 
 
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
-
   QQmlApplicationEngine engine;
+
+  qmlRegisterType< mss::control::ConfigController >("ConfigController", 1, 0, "ConfigController");
+
   const QUrl url("qrc:/qml/main.qml");
   engine.load(url);
   return app.exec();
