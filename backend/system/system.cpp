@@ -24,33 +24,48 @@ std::ostream& mss::SystemConfig::print(std::ostream& out)
 mss::System::System(const SystemConfig& config):
   system_time_(),
   is_end_(false),
-  prods_(config.produce_cnt, config.gen_start_time, config.gen_finish_time),
-  devices_(config.device_cnt, config.prod_rate_per_hour),
-  buffer_(config.buffer_cap),
+  prods_(config.producer_config),
+  devices_(config.device_config),
+  buffer_(config.buffer_config),
   calendar_(prods_, devices_, system_time_)
 {
   for (size_t i = 0; i < prods_.size(); i++)
   {
     prods_.generateNextBid(i, system_time_);
   }
+
+  print(std::cout) << std::endl;
 }
 
 void mss::System::step()
 {
-  print(std::cout) << std::endl;
-
   if (!is_end_)
   {
     auto res = determineNextEvent();
     analyseEvent(res.first, res.second);
-    return;
   }
-  return;
+  print(std::cout) << std::endl;
 }
 
-void mss::System::end()
+void mss::System::finish()
 {
-  is_end_ = true;
+  calendar_.finish(system_time_);
+  step();
+}
+
+double mss::System::getAvgRejectProb()
+{
+  return prods_.getAvgRejectProb();
+}
+
+double mss::System::getAvgTimeInSystem()
+{
+  return prods_.getAvgTimeInSystem();
+}
+
+double mss::System::getAvgWorkload()
+{
+  return devices_.getAvgWorkload(system_time_);
 }
 
 std::pair< size_t, mss::base::CalendarEntry > mss::System::determineNextEvent()
@@ -73,7 +88,7 @@ void mss::System::analyseEvent(size_t index, base::CalendarEntry entry)
 
   if (index < prods_.size())
   {
-    return eventModIncomeBid(index, entry);
+    return eventModIncomeBid(entry);
   }
   if (index < prods_.size() + devices_.size())
   {
@@ -82,7 +97,7 @@ void mss::System::analyseEvent(size_t index, base::CalendarEntry entry)
   return eventModEnd();
 }
 
-void mss::System::eventModIncomeBid(size_t index, base::CalendarEntry entry)
+void mss::System::eventModIncomeBid(base::CalendarEntry entry)
 {
   // БМС1 - обработка события "Поступление заявки"
   // 0. Сгенерировать новую заявку на этом источнике
@@ -90,10 +105,15 @@ void mss::System::eventModIncomeBid(size_t index, base::CalendarEntry entry)
   // 2. Иначе, если есть место в буфере, поместить заявку в буфер
   // 3. Иначе провести отказ заявки из буфера и поместить на ее место новую заявку
 
-  prods_.generateNextBid(index, system_time_);
-
-  if (devices_.setBid(entry, system_time_))
+  if (!calendar_.isFinished())
   {
+    prods_.generateNextBid(entry.id - 1, system_time_);
+  }
+
+  base::MssTime time_service = devices_.setBid(entry, system_time_);
+  if (!time_service.isNull())
+  {
+    prods_.setOnDeviceTime(entry.id - 1, time_service);
     return;
   }
 
@@ -102,8 +122,9 @@ void mss::System::eventModIncomeBid(size_t index, base::CalendarEntry entry)
     return;
   }
 
-  size_t reject_id = buffer_.getRejectBidId(entry);
-  prods_.reject(reject_id - 1);
+  base::CalendarEntry reject_entry = buffer_.getRejectBid(entry);
+  prods_.reject(reject_entry.id - 1);
+  prods_.setInBufferTime(reject_entry.id - 1, system_time_ - reject_entry.time);
   return;
 }
 
@@ -118,7 +139,14 @@ void mss::System::eventModFreeDevice()
     return;
   }
 
-  devices_.setBid(buffer_.get(index_service), system_time_);
+  base::CalendarEntry entry = buffer_.get(index_service);
+  prods_.setInBufferTime(entry.id - 1, system_time_ - entry.time);
+
+  base::MssTime time_service = devices_.setBid(entry, system_time_);
+  if (!time_service.isNull())
+  {
+    prods_.setOnDeviceTime(entry.id - 1, time_service);
+  }
   return;
 }
 
@@ -126,6 +154,10 @@ void mss::System::eventModEnd()
 {
   // БМС3 - обработка события "Конец моделирования"
 
+  while (calendar_.hasEntries())
+  {
+    step();
+  }
   is_end_ = true;
 }
 

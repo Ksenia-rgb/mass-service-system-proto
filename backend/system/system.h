@@ -7,33 +7,21 @@
 #include "calendar.h"
 #include "device.h"
 #include "producer.h"
+#include "types.h"
 
 namespace mss
 {
-  struct SystemConfig
-  {
-    size_t produce_cnt;
-    size_t device_cnt;
-    size_t buffer_cap;
-    size_t gen_start_time, gen_finish_time;
-    size_t prod_rate_per_hour;
-
-    SystemConfig();
-    std::ostream& print(std::ostream& out);
-  };
   class System
   {
   public:
     System(const SystemConfig& config);
 
     void step();
-    void end();
+    void finish();
 
-    std::pair< size_t, base::CalendarEntry > determineNextEvent();
-    void analyseEvent(size_t index, base::CalendarEntry entry);
-    void eventModIncomeBid(size_t index, base::CalendarEntry entry);
-    void eventModFreeDevice();
-    void eventModEnd();
+    double getAvgRejectProb();
+    double getAvgTimeInSystem();
+    double getAvgWorkload();
   private:
     base::MssTime system_time_;
     bool is_end_;
@@ -41,8 +29,13 @@ namespace mss
     base::ProducerGang prods_;
     base::DeviceGang devices_;
     base::Buffer buffer_;
-
     base::Calendar calendar_;
+
+    std::pair< size_t, base::CalendarEntry > determineNextEvent();
+    void analyseEvent(size_t index, base::CalendarEntry entry);
+    void eventModIncomeBid(base::CalendarEntry entry);
+    void eventModFreeDevice();
+    void eventModEnd();
 
     std::ostream& print(std::ostream& out);
   };

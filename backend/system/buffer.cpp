@@ -2,8 +2,9 @@
 
 #include <iostream>
 
-mss::base::Buffer::Buffer(size_t capacity):
-  buffer_(capacity, {false, {}}),
+mss::base::Buffer::Buffer(const BufferConfig& config):
+  config_(config),
+  buffer_(config.cap, {false, {}}),
   index_ptr_(0)
 {}
 
@@ -12,13 +13,9 @@ size_t mss::base::Buffer::size()
   return buffer_.size();
 }
 
-const mss::base::CalendarEntry& mss::base::Buffer::get(size_t index) const
+mss::base::CalendarEntry mss::base::Buffer::get(size_t index)
 {
-  return buffer_[index].second;
-}
-
-mss::base::CalendarEntry& mss::base::Buffer::get(size_t index)
-{
+  buffer_[index].first = false;
   return buffer_[index].second;
 }
 
@@ -27,15 +24,10 @@ size_t mss::base::Buffer::getServiceBidIndex()
   // Получить заявку на обслуживание из буфера
   // - Это место в буфере теперь свободно
 
-  size_t index = selectServiceBid();
-  if (index < size())
-  {
-    buffer_[index].first = false;
-  }
-  return index;
+  return selectServiceBid();
 }
 
-size_t mss::base::Buffer::getRejectBidId(CalendarEntry entry)
+mss::base::CalendarEntry mss::base::Buffer::getRejectBid(const CalendarEntry& entry)
 {
   // Получить заявку для отказа
   // - Это место в буфере теперь займет новая заявка
@@ -43,12 +35,12 @@ size_t mss::base::Buffer::getRejectBidId(CalendarEntry entry)
   size_t index = selectRejectBid();
   if (index < size())
   {
-    size_t res = buffer_[index].second.id;
+    CalendarEntry res = buffer_[index].second;
     buffer_[index].second = entry;
     return res;
   }
 
-  return 0;
+  return {};
 }
 
 bool mss::base::Buffer::addBid(CalendarEntry entry)
@@ -93,19 +85,18 @@ size_t mss::base::Buffer::selectServiceBid()
   // - Приоритет по номеру источника
   // - Приоритет по времени обслуживания (старые приориететнее)
 
-  size_t i = 0;
-  while (i < buffer_.size() && !buffer_[i].first)
+  size_t res = 0;
+  while (res < buffer_.size() && !buffer_[res].first)
   {
-    i++;
+    res++;
   }
 
-  if (i == buffer_.size())
+  if (res == buffer_.size())
   {
-    return i;
+    return res;
   }
 
-  size_t res = i;
-  for (; i < buffer_.size(); i++)
+  for (size_t i = res + 1; i < buffer_.size(); i++)
   {
     if (buffer_[i].first && buffer_[i].second.id < buffer_[res].second.id)
     {
@@ -127,25 +118,22 @@ size_t mss::base::Buffer::selectRejectBid()
   // Дисциплина отказа:
   // - Отказ последней поступившей в буфер заявке
 
-  size_t i = 0;
-  while (i < buffer_.size() && !buffer_[i].first)
+  size_t res = 0;
+  while (res < buffer_.size() && !buffer_[res].first)
   {
-    i++;
+    res++;
   }
 
-  if (i == buffer_.size())
+  if (res == buffer_.size())
   {
-    return i;
+    return res;
   }
 
-  size_t res = i++;
-  MssTime max_time = buffer_[res].second.time;
-  for (; i < buffer_.size(); i++)
+  for (size_t i = res + 1; i < buffer_.size(); i++)
   {
-    if (buffer_[i].second.time > max_time)
+    if (buffer_[i].second.time > buffer_[res].second.time)
     {
       res = i;
-      max_time = buffer_[i].second.time;
     }
   }
 

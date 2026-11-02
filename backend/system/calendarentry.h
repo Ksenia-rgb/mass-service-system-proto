@@ -12,7 +12,7 @@ namespace mss
     struct CalendarEntry
     {
       size_t id;
-      MssTime time;
+      MssTime time; // для источника: время генерации заявки, для прибора: время освобождения
       bool type;
 
       CalendarEntry();

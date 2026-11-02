@@ -5,6 +5,7 @@
 
 #include "msstime.h"
 #include "calendarentry.h"
+#include "types.h"
 
 namespace mss
 {
@@ -12,29 +13,39 @@ namespace mss
   {
     struct Producer: CalendarEntry
     {
+      size_t bid_cnt;
       size_t reject_cnt;
+      MssTime time_on_device;
+      MssTime time_in_buffer;
 
       Producer();
+
+      double getRejectProb();
+      double getAvgTimeInSystem();
+
       std::ostream& print(std::ostream& out) override;
     };
 
     class ProducerGang
     {
     public:
-      ProducerGang(size_t size, size_t gen_start_time, size_t gen_finish_time);
+      ProducerGang(const ProducerConfig& config);
 
       size_t size();
-      const Producer& get(size_t index) const;
-      Producer& get(size_t index);
+      Producer& operator[](size_t index);
 
-      MssTime generateNextBid(size_t index, MssTime system_time);
+      void setOnDeviceTime(size_t index, MssTime time_service);
+      void setInBufferTime(size_t index, MssTime time_in_buffer);
       void reject(size_t index);
-    private:
-      std::deque< Producer > gang_;
-      size_t gen_start_time_;
-      size_t gen_finish_time_;
+      MssTime generateNextBid(size_t index, MssTime system_time);
 
-      MssTime getTimeIncomeBid();
+      double getAvgRejectProb();
+      double getAvgTimeInSystem();
+    private:
+      ProducerConfig config_;
+      std::deque< Producer > gang_;
+
+      MssTime getGenerateBidTime();
     };
   }
 }

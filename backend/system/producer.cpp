@@ -1,46 +1,58 @@
 #include "producer.h"
 
-#include <random>
-#include <iomanip>
+#include "distribution.h"
 
 mss::base::Producer::Producer():
   CalendarEntry(),
-  reject_cnt(0)
+  bid_cnt(0),
+  reject_cnt(0),
+  time_on_device(0),
+  time_in_buffer(0)
 {}
 
-mss::base::ProducerGang::ProducerGang(size_t size, size_t gen_start_time, size_t gen_finish_time):
-  gang_(size, Producer{}),
-  gen_start_time_(gen_start_time),
-  gen_finish_time_(gen_finish_time)
-{}
+double mss::base::Producer::getRejectProb()
+{
+  if (bid_cnt == 0)
+  {
+    throw std::logic_error("Count of generated bids is zero");
+  }
+  return reject_cnt * 1.0 / bid_cnt;
+}
+
+double mss::base::Producer::getAvgTimeInSystem()
+{
+  return (time_on_device.time_sec + time_in_buffer.time_sec) / bid_cnt;
+}
 
 std::ostream& mss::base::Producer::print(std::ostream& out)
 {
-  out << id << '\t' << std::fixed << std::setprecision(3) << time.time_sec << "\t\t" << type;
-  return out << '\t' << reject_cnt;
+  CalendarEntry::print(out);
+  return out << '\t' << bid_cnt << '\t' << reject_cnt << '\t' << time_on_device << '\t' << time_in_buffer;
 }
+
+mss::base::ProducerGang::ProducerGang(const ProducerConfig& config):
+  config_(config),
+  gang_(config.cnt, Producer{})
+{}
 
 size_t mss::base::ProducerGang::size()
 {
   return gang_.size();
 }
 
-const mss::base::Producer& mss::base::ProducerGang::get(size_t index) const
+mss::base::Producer& mss::base::ProducerGang::operator[](size_t index)
 {
   return gang_[index];
 }
 
-mss::base::Producer& mss::base::ProducerGang::get(size_t index)
+void mss::base::ProducerGang::setOnDeviceTime(size_t index, MssTime time_service)
 {
-  return gang_[index];
+  gang_[index].time_on_device += time_service;
 }
 
-mss::base::MssTime mss::base::ProducerGang::generateNextBid(size_t index, MssTime system_time)
+void mss::base::ProducerGang::setInBufferTime(size_t index, MssTime time_in_buffer)
 {
-  MssTime time = system_time + getTimeIncomeBid();
-  gang_[index].time = time;
-  gang_[index].type = true;
-  return time;
+  gang_[index].time_in_buffer += time_in_buffer;
 }
 
 void mss::base::ProducerGang::reject(size_t index)
@@ -48,11 +60,42 @@ void mss::base::ProducerGang::reject(size_t index)
   gang_[index].reject_cnt++;
 }
 
-mss::base::MssTime mss::base::ProducerGang::getTimeIncomeBid()
+mss::base::MssTime mss::base::ProducerGang::generateNextBid(size_t index, MssTime system_time)
 {
-  std::mt19937 rng(std::random_device{}());
-  std::uniform_real_distribution< double > dist(gen_start_time_, gen_finish_time_);
+  MssTime time = system_time + getGenerateBidTime();
+  gang_[index].time = time;
+  gang_[index].type = true;
+  gang_[index].bid_cnt++;
+  return time;
+}
 
-  double time_sec = dist(rng);
-  return {time_sec};
+double mss::base::ProducerGang::getAvgRejectProb()
+{
+  double prob_sum = 0.0;
+  for (size_t i = 0; i < gang_.size(); i++)
+  {
+    prob_sum += gang_[i].getRejectProb();
+  }
+  return prob_sum / gang_.size();
+}
+
+double mss::base::ProducerGang::getAvgTimeInSystem()
+{
+  double time_sum = 0.0;
+  for (size_t i = 0; i < gang_.size(); i++)
+  {
+    time_sum += gang_[i].getAvgTimeInSystem();
+  }
+  return time_sum;
+}
+
+mss::base::MssTime mss::base::ProducerGang::getGenerateBidTime()
+{
+  // Закон распределения времени генерации заявок на источниках (равномерный)
+
+  if (config_.distrib_law == DistribLaw::Exp)
+  {
+    return distribution::getExpTime(config_.rate_per_hour);
+  }
+  return distribution::getUniformTime({config_.time_min}, {config_.time_max});
 }

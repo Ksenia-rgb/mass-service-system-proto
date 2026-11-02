@@ -5,6 +5,7 @@
 
 #include "calendarentry.h"
 #include "msstime.h"
+#include "types.h"
 
 namespace mss
 {
@@ -13,30 +14,35 @@ namespace mss
     struct Device: CalendarEntry
     {
       CalendarEntry bid;
+      MssTime time_use;
 
       Device();
-      std::ostream& print(std::ostream& out) override;
 
       bool isFree(MssTime system_time);
+      std::ostream& print(std::ostream& out) override;
+
+      // В приборе хранится копия календарной записи, там только id, time, type
+      // На приборе надо зафиксировать заявку именно в тот момент, как она туда попала
     };
 
     class DeviceGang
     {
     public:
-      DeviceGang(size_t size, size_t prod_rate_per_hour);
+      DeviceGang(const DeviceConfig& config);
 
       size_t size();
-      const Device& get(size_t index) const;
-      Device& get(size_t index);
+      Device& operator[](size_t index);
 
-      bool setBid(CalendarEntry bid, MssTime system_time);
+      MssTime setBid(CalendarEntry bid, MssTime system_time);
+
+      double getAvgWorkload(MssTime system_time);
     private:
+      DeviceConfig config_;
       std::deque< Device > gang_;
       size_t index_ptr_;
-      size_t prod_rate_per_hour_;
 
       size_t selectDevice(MssTime system_time);
-      MssTime getTimeFree(MssTime system_time);
+      MssTime getTimeService();
     };
   }
 }

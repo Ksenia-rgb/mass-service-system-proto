@@ -8,36 +8,17 @@
 
 int main(int argc, char* argv[])
 {
-  QGuiApplication app(argc, argv);
-  QQmlApplicationEngine engine;
+  mss::ProducerConfig producer_config{1, 100, 3, 5, 20, mss::DistribLaw::Uniform, 100};
+  mss::DeviceConfig device_config{1, 100, 2, 5, 20, mss::DistribLaw::Exp, 100};
+  mss::BufferConfig buffer_config{1, 100, 5};
 
-  qmlRegisterType< mss::control::ConfigController >("ConfigController", 1, 0, "ConfigController");
-
-  const QUrl url("qrc:/qml/main.qml");
-  engine.load(url);
-  return app.exec();
-
-  /*mss::SystemConfig config;
-  std::cin >>
-    config.produce_cnt >>
-    config.device_cnt >>
-    config.buffer_cap >>
-    config.gen_start_time >>
-    config.gen_finish_time >>
-    config.prod_rate_per_hour;
-
-  if (!std::cin)
-  {
-    std::cerr << "Incorrect arguments: enter produse count, device count, buffer capacity ";
-    std::cerr << "generate start time in sec, generate finish time in sec, produse rate per hour" << std::endl;
-    return 1;
-  }
-
-  mss::System system(config);
+  mss::System system({producer_config, device_config, buffer_config});
   std::string command;
   while (!(std::cin >> command).eof())
   {
     system.step();
   }
-  system.end();*/
+  system.finish();
+
+  std::cout << system.getAvgRejectProb() << '\n' << system.getAvgTimeInSystem() << '\n' << system.getAvgWorkload() << std::endl;
 }
