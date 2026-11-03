@@ -93,7 +93,7 @@ mss::base::MssTime mss::base::ProducerGang::getGenerateBidTime()
 {
   // Закон распределения времени генерации заявок на источниках (равномерный)
 
-  if (config_.distrib_law == DistribLaw::Exp)
+  if (config_.dist_law == DistLaw::Exp)
   {
     return distribution::getExpTime(config_.rate_per_hour);
   }

@@ -5,7 +5,7 @@
 
 namespace mss
 {
-  enum DistribLaw {Exp, Uniform};
+  enum DistLaw {Exp, Uniform};
 
   struct ProducerConfig
   {
@@ -17,8 +17,10 @@ namespace mss
     double time_min; // время генерации заявок на источниках
     double time_max;
 
-    DistribLaw distrib_law; // закон распределения времени генерации
     double rate_per_hour; // интенсивность генерации (кол-во заявок в единицу времени)
+    DistLaw dist_law; // закон распределения времени генерации
+
+    ProducerConfig();
   };
 
   struct DeviceConfig
@@ -31,8 +33,10 @@ namespace mss
     double time_min; // время обслуживания заявок на приборах
     double time_max;
 
-    DistribLaw distrib_law; // закон распределения времени обслуживания
     double rate_per_hour; // интенсивность обслуживания (кол-во заявок в единицу времени)
+    DistLaw dist_law; // закон распределения времени обслуживания
+
+    DeviceConfig();
   };
 
   struct BufferConfig
@@ -41,6 +45,8 @@ namespace mss
     size_t cap_max;
 
     size_t cap;
+
+    BufferConfig();
   };
 
   struct SystemConfig

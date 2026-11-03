@@ -9,7 +9,7 @@ CONFIG += c++17 cmdline
 RESOURCES += qml.qrc
 
 SOURCES += \
-        backend/gui-controller/config-controller.cpp \
+        backend/gui-controller/producer-config-controller.cpp \
         backend/system/buffer.cpp \
         backend/system/calendar.cpp \
         backend/system/calendarentry.cpp \
@@ -18,6 +18,7 @@ SOURCES += \
         backend/system/msstime.cpp \
         backend/system/producer.cpp \
         backend/system/system.cpp \
+        backend/system/types.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -30,7 +31,7 @@ DISTFILES += \
     main.qml
 
 HEADERS += \
-    backend/gui-controller/config-controller.h \
+    backend/gui-controller/producer-config-controller.h \
     backend/system/buffer.h \
     backend/system/calendar.h \
     backend/system/calendarentry.h \

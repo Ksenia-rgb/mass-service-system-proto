@@ -13,6 +13,6 @@ Window
   StackView {
     id: stackView
     anchors.fill: parent
-    initialItem: "pages/ConfigPage.qml"
+    initialItem: "pages/ProducerConfigPage.qml"
   }
 }
