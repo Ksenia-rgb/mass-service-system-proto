@@ -35,3 +35,9 @@ void mss::gui::BufferConfigController::setCap(int val)
   config_.cap = val;
   emit capChanged(val);
 }
+
+mss::BufferConfig mss::gui::BufferConfigController::getConfig()
+{
+  return config_;
+}
+

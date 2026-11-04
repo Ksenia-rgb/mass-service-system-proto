@@ -26,6 +26,8 @@ namespace mss
       void setCapMin(int val);
       void setCapMax(int val);
       void setCap(int val);
+
+      BufferConfig getConfig();
     signals:
       void capMinChanged(int);
       void capMaxChanged(int);

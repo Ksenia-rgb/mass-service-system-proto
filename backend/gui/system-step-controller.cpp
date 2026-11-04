@@ -1,4 +1,5 @@
 #include "system-step-controller.h"
 
-SystemStepController::SystemStepController()
+mss::gui::SystemStepController::SystemStepController(const SystemConfig& config, QObject* parent):
+  system_(config)
 {}

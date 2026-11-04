@@ -38,6 +38,8 @@ namespace mss
       void setTimeMax(double val);
       void setRate(double val);
       void setDistLaw(bool is_exp);
+
+      ProducerDeviceConfig getConfig();
     signals:
       void cntMinChanged(int);
       void cntMaxChanged(int);

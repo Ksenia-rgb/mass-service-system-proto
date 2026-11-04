@@ -9,7 +9,11 @@ CONFIG += c++17 cmdline
 RESOURCES += qml.qrc
 
 SOURCES += \
-        backend/gui-controller/producer-config-controller.cpp \
+        backend/gui/buffer-config-controller.cpp \
+        backend/gui/full-system-controller.cpp \
+        backend/gui/pd-config-controller.cpp \
+        backend/gui/system-auto-controller.cpp \
+        backend/gui/system-step-controller.cpp \
         backend/system/buffer.cpp \
         backend/system/calendar.cpp \
         backend/system/calendarentry.cpp \
@@ -31,7 +35,11 @@ DISTFILES += \
     main.qml
 
 HEADERS += \
-    backend/gui-controller/producer-config-controller.h \
+    backend/gui/buffer-config-controller.h \
+    backend/gui/full-system-controller.h \
+    backend/gui/pd-config-controller.h \
+    backend/gui/system-auto-controller.h \
+    backend/gui/system-step-controller.h \
     backend/system/buffer.h \
     backend/system/calendar.h \
     backend/system/calendarentry.h \

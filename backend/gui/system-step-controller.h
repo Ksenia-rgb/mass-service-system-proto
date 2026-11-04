@@ -1,10 +1,23 @@
-#ifndef SYSTEM - STEP - CONTROLLER_H
-#define SYSTEM -STEP - CONTROLLER_H
+#ifndef SYSTEM_STEP_CONTROLLER_H
+#define SYSTEM_STEP_CONTROLLER_H
 
-class SystemStepController
+#include <QObject>
+
+#include "../system/system.h"
+
+namespace mss
 {
-public:
-  SystemStepController();
-};
+  namespace gui
+  {
+    class SystemStepController: public QObject
+    {
+      Q_OBJECT
+    public:
+      SystemStepController(const SystemConfig& config, QObject* parent = nullptr);
+    private:
+      System system_;
+    };
+  }
+}
 
-#endif // SYSTEM-STEP-CONTROLLER_H
+#endif

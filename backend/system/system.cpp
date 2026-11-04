@@ -17,7 +17,7 @@ mss::System::System(const SystemConfig& config):
     prods_.generateNextBid(i, system_time_);
   }
 
-  print(std::cout) << std::endl;
+  // print(std::cout) << std::endl;
 }
 
 void mss::System::step()
@@ -27,7 +27,7 @@ void mss::System::step()
     auto res = determineNextEvent();
     analyseEvent(res.first, res.second);
   }
-  print(std::cout) << std::endl;
+  // print(std::cout) << std::endl;
 }
 
 void mss::System::finish()

@@ -86,3 +86,8 @@ void mss::gui::PDConfigController::setDistLaw(bool is_exp)
   }
   emit distLawChanged(is_exp);
 }
+
+mss::ProducerDeviceConfig mss::gui::PDConfigController::getConfig()
+{
+  return config_;
+}
