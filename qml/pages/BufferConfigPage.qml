@@ -114,7 +114,7 @@ Page
       text: "<-"
       font.pixelSize: 20
       padding: 4
-      Layout.preferredWidth: 40
+      Layout.preferredWidth: 50
 
       enabled: popEnabledBuffer
       onPressed: popBuffer()
@@ -128,7 +128,7 @@ Page
       text: "->"
       font.pixelSize: 20
       padding: 4
-      Layout.preferredWidth: 40
+      Layout.preferredWidth: 50
 
       enabled: pushEnabledBuffer
       onPressed: pushBuffer()
