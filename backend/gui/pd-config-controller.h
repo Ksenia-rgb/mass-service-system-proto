@@ -1,5 +1,5 @@
-#ifndef PRODUCER_CONFIG_CONTROLLER_H
-#define PRODUCER_CONFIG_CONTROLLER_H
+#ifndef PD_CONFIG_H
+#define PD_CONFIG_H
 
 #include <QObject>
 
@@ -7,9 +7,9 @@
 
 namespace mss
 {
-  namespace control
+  namespace gui
   {
-    class ProducerConfigController: public QObject
+    class PDConfigController: public QObject
     {
       Q_OBJECT
 
@@ -21,7 +21,7 @@ namespace mss
       Q_PROPERTY(double rate READ getRate WRITE setRate NOTIFY rateChanged FINAL)
       Q_PROPERTY(bool distLaw READ getDistLaw WRITE setDistLaw NOTIFY distLawChanged FINAL)
     public:
-      ProducerConfigController(QObject* parent = nullptr);
+      PDConfigController(QObject* parent = nullptr);
 
       int getCntMin() const;
       int getCntMax() const;
@@ -47,7 +47,7 @@ namespace mss
       void rateChanged(double);
       void distLawChanged(bool);
     private:
-      ProducerConfig config_;
+      ProducerDeviceConfig config_;
     };
   }
 }

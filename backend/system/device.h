@@ -28,7 +28,7 @@ namespace mss
     class DeviceGang
     {
     public:
-      DeviceGang(const DeviceConfig& config);
+      DeviceGang(const ProducerDeviceConfig& config);
 
       size_t size();
       Device& operator[](size_t index);
@@ -37,7 +37,7 @@ namespace mss
 
       double getAvgWorkload(MssTime system_time);
     private:
-      DeviceConfig config_;
+      ProducerDeviceConfig config_;
       std::deque< Device > gang_;
       size_t index_ptr_;
 

@@ -20,7 +20,7 @@ std::ostream& mss::base::Device::print(std::ostream& out)
   return out << '\t' << bid.id << '\t' << bid.time << '\t' << time_use.time_sec;
 }
 
-mss::base::DeviceGang::DeviceGang(const DeviceConfig& config):
+mss::base::DeviceGang::DeviceGang(const ProducerDeviceConfig& config):
   config_(config),
   gang_(config.cnt, Device{}),
   index_ptr_(0)

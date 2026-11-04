@@ -30,7 +30,7 @@ std::ostream& mss::base::Producer::print(std::ostream& out)
   return out << '\t' << bid_cnt << '\t' << reject_cnt << '\t' << time_on_device << '\t' << time_in_buffer;
 }
 
-mss::base::ProducerGang::ProducerGang(const ProducerConfig& config):
+mss::base::ProducerGang::ProducerGang(const ProducerDeviceConfig& config):
   config_(config),
   gang_(config.cnt, Producer{})
 {}

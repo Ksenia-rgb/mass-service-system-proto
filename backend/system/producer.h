@@ -29,7 +29,7 @@ namespace mss
     class ProducerGang
     {
     public:
-      ProducerGang(const ProducerConfig& config);
+      ProducerGang(const ProducerDeviceConfig& config);
 
       size_t size();
       Producer& operator[](size_t index);
@@ -42,7 +42,7 @@ namespace mss
       double getAvgRejectProb();
       double getAvgTimeInSystem();
     private:
-      ProducerConfig config_;
+      ProducerDeviceConfig config_;
       std::deque< Producer > gang_;
 
       MssTime getGenerateBidTime();
