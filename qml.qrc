@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/pages/ProducerConfigPage.qml</file>
+        <file>qml/components/MssLabeledIntField.qml</file>
+        <file>qml/components/MssLabeledDoubleField.qml</file>
+        <file>qml/components/MssRadioButton.qml</file>
+        <file>qml/components/MssFullConfigPage.qml</file>
+        <file>qml/pages/DeviceConfigPage.qml</file>
+        <file>qml/pages/BufferConfigPage.qml</file>
+        <file>qml/pages/ConfirmConfigPage.qml</file>
+        <file>images/comp-icon.jpg</file>
+    </qresource>
+</RCC>
