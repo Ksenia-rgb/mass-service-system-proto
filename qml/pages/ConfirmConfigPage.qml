@@ -23,6 +23,8 @@ Page
 
     rows: 2
     columns: 3
+    rowSpacing: 10
+    columnSpacing: 10
 
     MssConfigText
     {

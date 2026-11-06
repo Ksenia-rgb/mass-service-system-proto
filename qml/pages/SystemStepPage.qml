@@ -16,6 +16,12 @@ Page
 
   padding: MssTheme.pageMargin
 
+  Component.onCompleted:
+  {
+    systemStepController.start();
+    isStarted = true;
+  }
+
   header: MssHeader
   {
     text: "System step modeling"
@@ -47,7 +53,7 @@ Page
       Layout.column: 0
 
       modelLabel: "CALENDAR"
-      modelObject: systemStepController.calendar
+      modelObject: systemStepController.calendarModel
     }
 
     MssTableView
@@ -57,7 +63,7 @@ Page
       Layout.column: 1
 
       modelLabel: "BUFFER"
-      modelObject: systemStepController.buffer
+      modelObject: systemStepController.bufferModel
     }
 
     RowLayout

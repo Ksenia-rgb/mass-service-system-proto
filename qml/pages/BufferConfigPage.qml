@@ -23,11 +23,9 @@ Page
 
   GridLayout
   {
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: parent.top
-    rows: 3
-    columns: 4
+    anchors.fill: parent
+    rows: 5
+    columns: 2
     rowSpacing: 10
     columnSpacing: 10
 
@@ -36,6 +34,7 @@ Page
       id: inputCapMin
 
       Layout.row: 0
+      Layout.column: 0
       minValue: 1
       maxValue: config.capMax
       defaultValue: config.capMin
@@ -48,6 +47,7 @@ Page
       id: inputCapMax
 
       Layout.row: 1
+      Layout.column: 0
       minValue: config.capMin
       maxValue: 100000
       defaultValue: config.capMax
@@ -60,6 +60,7 @@ Page
       id: inputCap
 
       Layout.row: 2
+      Layout.column: 0
       minValue: config.capMin
       maxValue: config.capMax
       defaultValue: config.cap
@@ -72,9 +73,8 @@ Page
       id: configView
 
       Layout.row: 0
-      Layout.column: 2
-      Layout.rowSpan: 4
-      Layout.columnSpan: 2
+      Layout.column: 1
+      Layout.rowSpan: 3
       Layout.preferredWidth: parent.width * 0.5
       Layout.fillHeight: true
 
@@ -82,13 +82,24 @@ Page
         + "Capacity max: " + config.capMax + "<br><br>"
         + "<b>Capacity: " + config.cap + "</b>"
     }
-  }
 
-  footer: MssPassFooter
-  {
-    pushEnabled: pushEnabledBuffer
-    popEnabled: popEnabledBuffer
-    onPush: pushBuffer()
-    onPop: popBuffer()
+    Item
+    {
+      Layout.row: 3
+      Layout.column: 0
+      Layout.columnSpan: 2
+      Layout.fillHeight: true
+    }
+
+    MssPassFooter
+    {
+      Layout.row: 4
+      Layout.column: 0
+      Layout.columnSpan: 2
+      pushEnabled: pushEnabledBuffer
+      popEnabled: popEnabledBuffer
+      onPush: pushBuffer()
+      onPop: popBuffer()
+    }
   }
 }

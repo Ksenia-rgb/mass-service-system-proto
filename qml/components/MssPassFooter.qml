@@ -13,8 +13,12 @@ RowLayout
   {
     text: "<-"
     font.pixelSize: 20
-    padding: 4
-    Layout.preferredWidth: 50
+    padding: 0
+
+    background: Rectangle
+    {
+      color: "transparent"
+    }
 
     enabled: popEnabled
     onClicked: pop()
@@ -27,8 +31,12 @@ RowLayout
   {
     text: "->"
     font.pixelSize: 20
-    padding: 4
-    Layout.preferredWidth: 50
+    padding: 0
+
+    background: Rectangle
+    {
+      color: "transparent"
+    }
 
     enabled: pushEnabled
     onClicked: push()

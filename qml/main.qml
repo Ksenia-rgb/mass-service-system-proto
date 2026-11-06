@@ -2,10 +2,13 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import mss
 import pages
 
 Window
 {
+  property QtObject systemController: SystemController
+
   width: 600
   height: 550
   visible: true
@@ -60,7 +63,11 @@ Window
       id: configConfirmPage
       ConfirmConfigPage
       {
-        onYes: stack.push(systemStepPage)
+        onYes:
+        {
+          systemController.prepareSystemStepController();
+          stack.push(systemStepPage);
+        }
         onNo: stack.pop()
       }
     }
@@ -70,7 +77,11 @@ Window
       id: systemStepPage
       SystemStepPage
       {
-        onGoAuto: stack.push(systemAutoPage)
+        onGoAuto:
+        {
+          systemController.prepareSystemAutoController();
+          stack.push(systemAutoPage);
+        }
       }
     }
 

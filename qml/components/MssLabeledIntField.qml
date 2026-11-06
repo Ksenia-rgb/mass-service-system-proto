@@ -17,8 +17,6 @@ ColumnLayout
     frozenDefaultValue = defaultValue
   }
 
-  Layout.column: 0
-  Layout.columnSpan: 2
   spacing: 4
 
   Label

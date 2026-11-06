@@ -28,11 +28,9 @@ Page
 
   GridLayout
   {
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: parent.top
+    anchors.fill: parent
     rows: 9
-    columns: 4
+    columns: 2
     rowSpacing: 10
     columnSpacing: 10
 
@@ -41,6 +39,7 @@ Page
       id: inputCntMin
 
       Layout.row: 0
+      Layout.column: 0
       minValue: 1
       maxValue: config.cntMax
       defaultValue: config.cntMin
@@ -53,6 +52,7 @@ Page
       id: inputCntMax
 
       Layout.row: 1
+      Layout.column: 0
       minValue: config.cntMin
       maxValue: 100000
       defaultValue: config.cntMax
@@ -65,6 +65,7 @@ Page
       id: inputCnt
 
       Layout.row: 2
+      Layout.column: 0
       minValue: config.cntMin
       maxValue: config.cntMax
       defaultValue: config.cnt
@@ -77,6 +78,7 @@ Page
       id: inputTimeMin
 
       Layout.row: 3
+      Layout.column: 0
       minValue: 1.000
       maxValue: config.timeMax
       defaultValue: config.timeMin
@@ -89,6 +91,7 @@ Page
       id: inputTimeMax
 
       Layout.row: 4
+      Layout.column: 0
       minValue: config.timeMin
       maxValue: 100000.000
       defaultValue: config.timeMax
@@ -101,6 +104,7 @@ Page
       id: inputRate
 
       Layout.row: 5
+      Layout.column: 0
       minValue: 1.000
       maxValue: 100000.000
       defaultValue: config.rate
@@ -112,7 +116,6 @@ Page
     {
       Layout.row: 6
       Layout.column: 0
-      Layout.columnSpan: 2
       spacing: 0
 
       Label
@@ -149,9 +152,8 @@ Page
       id: configView
 
       Layout.row: 0
-      Layout.column: 2
-      Layout.rowSpan: 9
-      Layout.columnSpan: 2
+      Layout.column: 1
+      Layout.rowSpan: 7
       Layout.preferredWidth: parent.width * 0.5
       Layout.fillHeight: true
 
@@ -163,13 +165,24 @@ Page
         + "Rate: " + config.rate + "<br><br>"
         + "<b>Distribution law: " + (config.distLaw ? "Exponential" : "Uniform") + "</b>"
     }
-  }
 
-  footer: MssPassFooter
-  {
-    pushEnabled: pushEnabledPD
-    popEnabled: popEnabledPD
-    onPush: pushPD()
-    onPop: popPD()
+    Item
+    {
+      Layout.row: 7
+      Layout.column: 0
+      Layout.columnSpan: 2
+      Layout.fillHeight: true
+    }
+
+    MssPassFooter
+    {
+      Layout.row: 8
+      Layout.column: 0
+      Layout.columnSpan: 2
+      pushEnabled: pushEnabledPD
+      popEnabled: popEnabledPD
+      onPush: pushPD()
+      onPop: popPD()
+    }
   }
 }

@@ -4,27 +4,12 @@ mss::gui::SystemStepController::SystemStepController(QObject* parent):
   system_(SystemConfig{})
 {}
 
-mss::gui::PDConfigController* mss::gui::SystemStepController::getProducerConfig()
-{
-  return &producer_config_;
-}
-
-mss::gui::PDConfigController* mss::gui::SystemStepController::getDeviceConfig()
-{
-  return &device_config_;
-}
-
-mss::gui::BufferConfigController* mss::gui::SystemStepController::getBufferConfig()
-{
-  return &buffer_config_;
-}
-
-QAbstractTableModel* mss::gui::SystemStepController::getCalendar()
+QAbstractTableModel* mss::gui::SystemStepController::getCalendarModel()
 {
   return &calendar_model_;
 }
 
-QAbstractTableModel* mss::gui::SystemStepController::getBuffer()
+QAbstractTableModel* mss::gui::SystemStepController::getBufferModel()
 {
   return &buffer_model_;
 }
@@ -34,9 +19,14 @@ QString mss::gui::SystemStepController::getSystemTime() const
   return system_time_;
 }
 
+void mss::gui::SystemStepController::setSystemConfig(const SystemConfig& config)
+{
+  config_ = config;
+}
+
 void mss::gui::SystemStepController::start()
 {
-  system_ = System({producer_config_.getConfig(), device_config_.getConfig(), buffer_config_.getConfig()});
+  system_ = System{config_};
   setRows(system_.start());
 }
 
