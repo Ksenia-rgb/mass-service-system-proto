@@ -2,10 +2,10 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 
-import Mss
-import "../components"
+import mss
+import components
 
-MssFullConfigPage
+MssPDConfigPage
 {
   required property bool pushEnabledProducer
   required property bool popEnabledProducer
@@ -19,8 +19,8 @@ MssFullConfigPage
   rateStr: "Enter rate of generation (bids per hour)"
   distLawStr: "Select distribution law for generation bid time"
 
-  pushEnabled: pushEnabledProducer
-  popEnabled: popEnabledProducer
-  onPush: pushProducer()
-  onPop: popProducer()
+  pushEnabledPD: pushEnabledProducer
+  popEnabledPD: popEnabledProducer
+  onPushPD: pushProducer()
+  onPopPD: popProducer()
 }

@@ -19,7 +19,6 @@ namespace mss
       Device();
 
       bool isFree(MssTime system_time);
-      std::ostream& print(std::ostream& out) override;
 
       // В приборе хранится копия календарной записи, там только id, time, type
       // На приборе надо зафиксировать заявку именно в тот момент, как она туда попала

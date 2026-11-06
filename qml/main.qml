@@ -2,12 +2,12 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "pages"
+import pages
 
 Window
 {
   width: 600
-  height: 500
+  height: 550
   visible: true
   title: qsTr("Mass Service System")
 
@@ -60,9 +60,24 @@ Window
       id: configConfirmPage
       ConfirmConfigPage
       {
-        onYes: stack.push(configConfirmPage)
+        onYes: stack.push(systemStepPage)
         onNo: stack.pop()
       }
+    }
+
+    Component
+    {
+      id: systemStepPage
+      SystemStepPage
+      {
+        onGoAuto: stack.push(systemAutoPage)
+      }
+    }
+
+    Component
+    {
+      id: systemAutoPage
+      SystemAutoPage{}
     }
   }
 }

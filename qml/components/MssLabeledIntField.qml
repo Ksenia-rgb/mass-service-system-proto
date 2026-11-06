@@ -19,7 +19,6 @@ ColumnLayout
 
   Layout.column: 0
   Layout.columnSpan: 2
-  Layout.leftMargin: 10
   spacing: 4
 
   Label

@@ -2,15 +2,15 @@ QT += core gui qml quick
 
 CONFIG += c++17 cmdline
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+INCLUDEPATH += backend/system
+QML_IMPORT_PATH += $$PWD/qml
 
 RESOURCES += qml.qrc
 
 SOURCES += \
         backend/gui/buffer-config-controller.cpp \
-        backend/gui/full-system-controller.cpp \
+        backend/gui/buffer-table-model.cpp \
+        backend/gui/calendar-table-model.cpp \
         backend/gui/pd-config-controller.cpp \
         backend/gui/system-auto-controller.cpp \
         backend/gui/system-step-controller.cpp \
@@ -32,11 +32,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     README.md \
-    main.qml
+    main.qml \
+    qml/components/qmldir \
+    qml/pages/qmldir \
+    qml/styles/qmldir
 
 HEADERS += \
     backend/gui/buffer-config-controller.h \
-    backend/gui/full-system-controller.h \
+    backend/gui/buffer-table-model.h \
+    backend/gui/calendar-table-model.h \
     backend/gui/pd-config-controller.h \
     backend/gui/system-auto-controller.h \
     backend/gui/system-step-controller.h \

@@ -2,30 +2,25 @@
 #include <QtQml/QQmlApplicationEngine>
 #include <QIcon>
 
-#include "backend/gui/full-system-controller.h"
-
+#include "backend/gui/system-step-controller.h"
 
 int main(int argc, char* argv[])
 {
-  mss::gui::FullSystemController controller;
+  mss::gui::SystemStepController system_step_controller;
 
   QGuiApplication app(argc, argv);
   app.setWindowIcon(QIcon(":/images/comp-icon.jpg"));
 
   QQmlApplicationEngine engine;
 
-  qmlRegisterType< mss::gui::PDConfigController >("Mss", 1, 0, "PDConfigControllerType");
-  qmlRegisterType< mss::gui::BufferConfigController >("Mss", 1, 0, "BufferConfigControllerType");
-  qmlRegisterType< mss::gui::SystemStepController >("Mss", 1, 0, "SystemStepControllerType");
-  qmlRegisterType< mss::gui::SystemAutoController >("Mss", 1, 0, "SystemAutoControllerType");
+  qmlRegisterType< mss::gui::PDConfigController >("mss", 1, 0, "PDConfigControllerType");
 
-  qmlRegisterSingletonInstance("Mss", 1, 0, "ProducerConfigController", controller.getProducerConfigPtr());
-  qmlRegisterSingletonInstance("Mss", 1, 0, "DeviceConfigController", controller.getDeviceConfigPtr());
-  qmlRegisterSingletonInstance("Mss", 1, 0, "BufferConfigController", controller.getBufferConfigPtr());
-  qmlRegisterSingletonInstance("Mss", 1, 0, "SystemStepController", controller.getSystemStepPtr());
-  qmlRegisterSingletonInstance("Mss", 1, 0, "SystemAutoController", controller.getSystemAutoPtr());
+  qmlRegisterSingletonInstance("mss", 1, 0, "SystemStepController", &system_step_controller);
+  qmlRegisterSingletonInstance("mss", 1, 0, "ProducerConfigController", system_step_controller.getProducerConfig());
+  qmlRegisterSingletonInstance("mss", 1, 0, "DeviceConfigController", system_step_controller.getDeviceConfig());
+  qmlRegisterSingletonInstance("mss", 1, 0, "BufferConfigController", system_step_controller.getBufferConfig());
 
-  const QUrl url("qrc:/qml/main.qml");
-  engine.load(url);
+  engine.addImportPath(":/qml");
+  engine.load("qrc:/qml/main.qml");
   return app.exec();
 }

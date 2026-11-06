@@ -16,8 +16,9 @@ namespace mss
   public:
     System(const SystemConfig& config);
 
-    void step();
-    void finish();
+    SystemResultsStr start();
+    SystemResultsStr step();
+    SystemResultsStr finish();
 
     double getAvgRejectProb();
     double getAvgTimeInSystem();
@@ -37,7 +38,7 @@ namespace mss
     void eventModFreeDevice();
     void eventModEnd();
 
-    std::ostream& print(std::ostream& out);
+    SystemResultsStr resultsStr() const;
   };
 }
 

@@ -22,8 +22,6 @@ namespace mss
 
       double getRejectProb();
       double getAvgTimeInSystem();
-
-      std::ostream& print(std::ostream& out) override;
     };
 
     class ProducerGang

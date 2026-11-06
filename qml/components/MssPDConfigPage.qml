@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 
-import Mss
+import mss
+import styles
 
 Page
 {
@@ -13,21 +14,16 @@ Page
   required property string rateStr
   required property string distLawStr
 
-  required property bool pushEnabled
-  required property bool popEnabled
-  signal push()
-  signal pop()
+  required property bool pushEnabledPD
+  required property bool popEnabledPD
+  signal pushPD()
+  signal popPD()
 
-  header: Text
+  padding: MssTheme.pageMargin
+
+  header: MssHeader
   {
-    id: header
-
     text: headerStr
-    font.pixelSize: 16
-    font.bold: true
-    leftPadding: 10
-    topPadding: 5
-    bottomPadding: 5
   }
 
   GridLayout
@@ -117,8 +113,6 @@ Page
       Layout.row: 6
       Layout.column: 0
       Layout.columnSpan: 2
-      Layout.leftMargin: 10
-      Layout.bottomMargin: 10
       spacing: 0
 
       Label
@@ -150,7 +144,7 @@ Page
       }
     }
 
-    TextArea
+    MssConfigText
     {
       id: configView
 
@@ -158,60 +152,24 @@ Page
       Layout.column: 2
       Layout.rowSpan: 9
       Layout.columnSpan: 2
-
       Layout.preferredWidth: parent.width * 0.5
       Layout.fillHeight: true
-      Layout.rightMargin: 10
-      Layout.topMargin: 10
-      Layout.bottomMargin: 10
 
-      readOnly: true
-      selectByMouse: true
-      wrapMode: TextEdit.Wrap
-      textFormat: TextEdit.PlainText
-
-      background: Rectangle
-      {
-        color: "transparent"
-        border.color: "#888"
-        border.width: 1
-      }
-
-      text: "Count min: " + config.cntMin + "\n\n"
-        + "Count max: " + config.cntMax + "\n\n"
-        + "Count: " + config.cnt + "\n\n"
-        + "Time min: " + config.timeMin + "\n\n"
-        + "Time max: " + config.timeMax + "\n\n"
-        + "Rate: " + config.rate + "\n\n"
-        + "Distribution law: " + (config.distLaw ? "Exponential" : "Uniform")
+      text: "Count min: " + config.cntMin + "<br><br>"
+        + "Count max: " + config.cntMax + "<br><br>"
+        + "<b>Count: " + config.cnt + "</b><br><br>"
+        + "Time min: " + config.timeMin + "<br><br>"
+        + "Time max: " + config.timeMax + "<br><br>"
+        + "Rate: " + config.rate + "<br><br>"
+        + "<b>Distribution law: " + (config.distLaw ? "Exponential" : "Uniform") + "</b>"
     }
   }
 
-  footer: RowLayout
+  footer: MssPassFooter
   {
-    Button
-    {
-      text: "<-"
-      font.pixelSize: 20
-      padding: 4
-      Layout.preferredWidth: 50
-
-      enabled: popEnabled
-      onPressed: pop()
-    }
-    Item
-    {
-      Layout.fillWidth: true
-    }
-    Button
-    {
-      text: "->"
-      font.pixelSize: 20
-      padding: 4
-      Layout.preferredWidth: 50
-
-      enabled: pushEnabled
-      onPressed: push()
-    }
+    pushEnabled: pushEnabledPD
+    popEnabled: popEnabledPD
+    onPush: pushPD()
+    onPop: popPD()
   }
 }

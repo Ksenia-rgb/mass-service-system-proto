@@ -1,6 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <QVector>
+#include <QString>
+
 #include <cstddef>
 
 namespace mss
@@ -38,6 +41,28 @@ namespace mss
     ProducerDeviceConfig producer_config;
     ProducerDeviceConfig device_config;
     BufferConfig buffer_config;
+  };
+
+  struct CalendarRowResultStr
+  {
+    QString id;
+    QString time;
+    QString type;
+  };
+  using CalendarResultsStr = QVector< CalendarRowResultStr >;
+
+  struct BufferRowResultStr
+  {
+    QString id;
+    QString time;
+  };
+  using BufferResultsStr = QVector< BufferRowResultStr >;
+
+  struct SystemResultsStr
+  {
+    QString system_time;
+    CalendarResultsStr calendar_rows;
+    BufferResultsStr buffer_rows;
   };
 }
 

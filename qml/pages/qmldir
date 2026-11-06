@@ -1,0 +1,8 @@
+model pages
+
+BufferConfigPage    1.0     BufferConfigPage.qml
+ConfirmConfigPage   1.0     ConfirmConfigPage.qml
+DeviceConfigPage    1.0     DeviceConfigPage.qml
+ProducerConfigPage  1.0     ProducerConfigPage.qml
+SystemAutoPage      1.0     SystemAutoPage.qml
+SystemStepPage      1.0     SystemStepPage.qml

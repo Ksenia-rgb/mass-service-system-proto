@@ -1,7 +1,6 @@
 #include "calendar.h"
 
 #include <cstddef>
-#include <iostream>
 
 mss::base::Calendar::Calendar(ProducerGang& prods, DeviceGang& devices, MssTime system_time):
   calendar_(prods.size() + devices.size() + 1, nullptr),
@@ -83,17 +82,17 @@ bool mss::base::Calendar::hasEntries()
   return false;
 }
 
-std::ostream& mss::base::Calendar::print(std::ostream& out)
+mss::CalendarResultsStr mss::base::Calendar::resultsStr() const
 {
-  // Вывести текущее состояние календаря
-
-  out << 0 << '\t';
-  calendar_[0]->print(out);
-
-  for (size_t i = 1; i < calendar_.size(); i++)
+  CalendarResultsStr res(calendar_.size());
+  for (size_t i = 0; i < calendar_.size(); i++)
   {
-    out << '\n' << i << '\t';
-    calendar_[i]->print(out);
+    res[i] = CalendarRowResultStr{
+      QString::number(calendar_[i]->id),
+      QString::number(calendar_[i]->time.time_sec),
+      QString::number(calendar_[i]->type)
+    };
   }
-  return out;
+
+  return res;
 }

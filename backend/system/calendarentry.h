@@ -16,7 +16,6 @@ namespace mss
       bool type;
 
       CalendarEntry();
-      virtual std::ostream& print(std::ostream& out);
     };
   }
 }

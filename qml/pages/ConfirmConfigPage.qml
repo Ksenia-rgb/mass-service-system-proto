@@ -2,7 +2,9 @@ import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
 
-import Mss
+import mss
+import styles
+import components
 
 Page
 {
@@ -13,39 +15,24 @@ Page
   signal no()
   signal yes()
 
+  padding: MssTheme.pageMargin
+
   GridLayout
   {
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.top: parent.top
-    anchors.bottom: parent.bottom
-    anchors.margins: 10
+    anchors.fill: parent
 
     rows: 2
     columns: 3
 
-    TextArea
+    MssConfigText
     {
       id: producerConfigConfirm
 
       Layout.row: 0
       Layout.column: 0
-
       Layout.preferredWidth: 1
       Layout.fillWidth: true
       Layout.fillHeight: true
-
-      readOnly: true
-      selectByMouse: true
-      wrapMode: TextEdit.Wrap
-      textFormat: TextEdit.RichText
-
-      background: Rectangle
-      {
-        color: "transparent"
-        border.color: "#888"
-        border.width: 1
-      }
 
       text: "<b>Producer config:</b><br><br><br>"
         + "Count min: " + producerConfig.cntMin + "<br><br>"
@@ -57,28 +44,15 @@ Page
         + "Distribution law: " + (producerConfig.distLaw ? "Exponential" : "Uniform")
     }
 
-    TextArea
+    MssConfigText
     {
       id: deviceConfigConfirm
 
       Layout.row: 0
       Layout.column: 1
-
       Layout.preferredWidth: 1
       Layout.fillWidth: true
       Layout.fillHeight: true
-
-      readOnly: true
-      selectByMouse: true
-      wrapMode: TextEdit.Wrap
-      textFormat: TextEdit.RichText
-
-      background: Rectangle
-      {
-        color: "transparent"
-        border.color: "#888"
-        border.width: 1
-      }
 
       text: "<b>Device config:</b><br><br><br>"
         + "Count min: " + deviceConfig.cntMin + "<br><br>"
@@ -90,28 +64,15 @@ Page
         + "Distribution law: " + (deviceConfig.distLaw ? "Exponential" : "Uniform")
     }
 
-    TextArea
+    MssConfigText
     {
       id: bufferConfigConfirm
 
       Layout.row: 0
       Layout.column: 2
-
       Layout.preferredWidth: 1
       Layout.fillWidth: true
       Layout.fillHeight: true
-
-      readOnly: true
-      selectByMouse: true
-      wrapMode: TextEdit.Wrap
-      textFormat: TextEdit.RichText
-
-      background: Rectangle
-      {
-        color: "transparent"
-        border.color: "#888"
-        border.width: 1
-      }
 
       text: "<b>Buffer config:</b><br><br><br>"
         + "Capacity min: " + bufferConfig.capMin + "<br><br>"
@@ -127,7 +88,6 @@ Page
 
       Layout.fillWidth: true
       Layout.fillHeight: true
-      Layout.margins: 10
 
       Button
       {

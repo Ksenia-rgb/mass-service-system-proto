@@ -1,7 +1,5 @@
 #include "buffer.h"
 
-#include <iostream>
-
 mss::base::Buffer::Buffer(const BufferConfig& config):
   config_(config),
   buffer_(config.cap, {false, {}}),
@@ -140,28 +138,23 @@ size_t mss::base::Buffer::selectRejectBid()
   return res;
 }
 
-std::ostream& mss::base::Buffer::print(std::ostream& out)
+mss::BufferResultsStr mss::base::Buffer::resultsStr() const
 {
-  if (buffer_[0].first)
+  BufferResultsStr res(buffer_.size());
+  for (size_t i = 0; i < buffer_.size(); i++)
   {
-    buffer_[0].second.print(out);
-  }
-  else
-  {
-    out << 0;
-  }
-
-  for (size_t i = 1; i < buffer_.size(); i++)
-  {
-    out << '\n';
     if (buffer_[i].first)
     {
-      buffer_[i].second.print(out);
+      res[i] = BufferRowResultStr{
+        QString::number(buffer_[i].second.id),
+        QString::number(buffer_[i].second.time.time_sec)
+      };
     }
     else
     {
-      out << 0;
+      res[i] = BufferRowResultStr{"0", "0"};
     }
   }
-  return out;
+
+  return res;
 }

@@ -14,12 +14,6 @@ bool mss::base::Device::isFree(MssTime system_time)
   return time.isNull() || time <= system_time;
 }
 
-std::ostream& mss::base::Device::print(std::ostream& out)
-{
-  CalendarEntry::print(out);
-  return out << '\t' << bid.id << '\t' << bid.time << '\t' << time_use.time_sec;
-}
-
 mss::base::DeviceGang::DeviceGang(const ProducerDeviceConfig& config):
   config_(config),
   gang_(config.cnt, Device{}),
