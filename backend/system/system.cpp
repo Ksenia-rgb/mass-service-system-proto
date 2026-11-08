@@ -1,8 +1,6 @@
 #include "system.h"
 
 #include <cmath>
-#include <iostream>
-#include <iomanip>
 
 mss::System::System(const SystemConfig& config):
   system_time_(),
@@ -16,24 +14,27 @@ mss::System::System(const SystemConfig& config):
   {
     prods_.generateNextBid(i, system_time_);
   }
-
-  print(std::cout) << std::endl;
 }
 
-void mss::System::step()
+mss::SystemResultsStr mss::System::start()
+{
+  return resultsStr();
+}
+
+mss::SystemResultsStr mss::System::step()
 {
   if (!is_end_)
   {
     auto res = determineNextEvent();
     analyseEvent(res.first, res.second);
   }
-  print(std::cout) << std::endl;
+  return resultsStr();
 }
 
-void mss::System::finish()
+mss::SystemResultsStr mss::System::finish()
 {
   calendar_.finish(system_time_);
-  step();
+  return step();
 }
 
 double mss::System::getAvgRejectProb()
@@ -144,11 +145,7 @@ void mss::System::eventModEnd()
   is_end_ = true;
 }
 
-std::ostream& mss::System::print(std::ostream& out)
+mss::SystemResultsStr mss::System::resultsStr() const
 {
-  out << "SYSTEM TIME: " << std::fixed << std::setprecision(3) << system_time_.time_sec << '\n';
-  calendar_.print(out);
-
-  out << "\nBUFFER:\n";
-  return buffer_.print(out);
+  return {QString::number(system_time_.time_sec), calendar_.resultsStr(), buffer_.resultsStr()};
 }

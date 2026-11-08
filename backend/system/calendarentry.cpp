@@ -5,8 +5,3 @@ mss::base::CalendarEntry::CalendarEntry():
   time(),
   type(false)
 {}
-
-std::ostream& mss::base::CalendarEntry::print(std::ostream& out)
-{
-  return out << id << '\t' << time << "\t\t" << type;
-}

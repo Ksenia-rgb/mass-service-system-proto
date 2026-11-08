@@ -24,13 +24,7 @@ double mss::base::Producer::getAvgTimeInSystem()
   return (time_on_device.time_sec + time_in_buffer.time_sec) / bid_cnt;
 }
 
-std::ostream& mss::base::Producer::print(std::ostream& out)
-{
-  CalendarEntry::print(out);
-  return out << '\t' << bid_cnt << '\t' << reject_cnt << '\t' << time_on_device << '\t' << time_in_buffer;
-}
-
-mss::base::ProducerGang::ProducerGang(const ProducerConfig& config):
+mss::base::ProducerGang::ProducerGang(const ProducerDeviceConfig& config):
   config_(config),
   gang_(config.cnt, Producer{})
 {}
@@ -93,7 +87,7 @@ mss::base::MssTime mss::base::ProducerGang::getGenerateBidTime()
 {
   // Закон распределения времени генерации заявок на источниках (равномерный)
 
-  if (config_.distrib_law == DistribLaw::Exp)
+  if (config_.dist_law == DistLaw::Exp)
   {
     return distribution::getExpTime(config_.rate_per_hour);
   }

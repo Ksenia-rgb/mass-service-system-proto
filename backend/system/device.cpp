@@ -14,13 +14,7 @@ bool mss::base::Device::isFree(MssTime system_time)
   return time.isNull() || time <= system_time;
 }
 
-std::ostream& mss::base::Device::print(std::ostream& out)
-{
-  CalendarEntry::print(out);
-  return out << '\t' << bid.id << '\t' << bid.time << '\t' << time_use.time_sec;
-}
-
-mss::base::DeviceGang::DeviceGang(const DeviceConfig& config):
+mss::base::DeviceGang::DeviceGang(const ProducerDeviceConfig& config):
   config_(config),
   gang_(config.cnt, Device{}),
   index_ptr_(0)
@@ -61,14 +55,9 @@ size_t mss::base::DeviceGang::selectDevice(MssTime system_time)
   // Дисциплина выбора прибора:
   // - Выбор прибора по кольцу
 
-  if (gang_[index_ptr_].isFree(system_time))
+  for (size_t k = 0; k < gang_.size(); k++)
   {
-    size_t index_res = index_ptr_;
-    index_ptr_ = (index_ptr_ + 1) % gang_.size();
-    return index_res;
-  }
-  for (size_t i = (index_ptr_ + 1) % gang_.size(); i != index_ptr_; i++)
-  {
+    size_t i = (index_ptr_ + k) % gang_.size();
     if (gang_[i].isFree(system_time))
     {
       index_ptr_ = (i + 1) % gang_.size();
@@ -92,7 +81,7 @@ mss::base::MssTime mss::base::DeviceGang::getTimeService()
 {
   // Закон распределения времени обслуживания заявок на приборах (экспоненциальный)
 
-  if (config_.distrib_law == DistribLaw::Exp)
+  if (config_.dist_law == DistLaw::Exp)
   {
     return distribution::getExpTime(config_.rate_per_hour);
   }

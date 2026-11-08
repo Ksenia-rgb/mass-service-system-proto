@@ -1,0 +1,10 @@
+module components
+
+MssConfigText           1.0     MssConfigText.qml
+MssHeader               1.0     MssHeader.qml
+MssLabeledDoubleField   1.0     MssLabeledDoubleField.qml
+MssLabeledIntField      1.0     MssLabeledIntField.qml
+MssPassFooter           1.0     MssPassFooter.qml
+MssPDConfigPage         1.0     MssPDConfigPage.qml
+MssRadioButton          1.0     MssRadioButton.qml
+MssTableView            1.0     MssTableView.qml

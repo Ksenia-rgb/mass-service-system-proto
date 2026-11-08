@@ -1,23 +1,32 @@
-#include <iostream>
+#include <QtWidgets/QApplication>
+#include <QtQml/QQmlApplicationEngine>
+#include <QIcon>
 
-#include <QCoreApplication>
+#include "backend/gui/system-controller.h"
+#include "backend/gui/custom-plot-item.h"
 
-#include "backend/system/system.h"
-
-
-int main()
+int main(int argc, char* argv[])
 {
-  mss::ProducerConfig producer_config{1, 100, 3, 5, 20, mss::DistribLaw::Uniform, 100};
-  mss::DeviceConfig device_config{1, 100, 2, 5, 20, mss::DistribLaw::Exp, 100};
-  mss::BufferConfig buffer_config{1, 100, 5};
+  mss::gui::SystemController system_controller;
 
-  mss::System system({producer_config, device_config, buffer_config});
-  std::string command;
-  while (!(std::cin >> command).eof())
-  {
-    system.step();
-  }
-  system.finish();
+  QApplication app(argc, argv);
+  app.setWindowIcon(QIcon(":/images/comp-icon.jpg"));
 
-  std::cout << system.getAvgRejectProb() << '\n' << system.getAvgTimeInSystem() << '\n' << system.getAvgWorkload() << std::endl;
+  QQmlApplicationEngine engine;
+
+  qmlRegisterType< mss::gui::PDConfigController >("mss", 1, 0, "PDConfigControllerType");
+  qmlRegisterType< mss::gui::CustomPlotItem >("charts", 1, 0, "CustomPlotItemType");
+
+  qmlRegisterSingletonInstance("mss", 1, 0, "ProducerConfigController", system_controller.getProducerConfig());
+  qmlRegisterSingletonInstance("mss", 1, 0, "DeviceConfigController", system_controller.getDeviceConfig());
+  qmlRegisterSingletonInstance("mss", 1, 0, "BufferConfigController", system_controller.getBufferConfig());
+  qmlRegisterSingletonInstance("mss", 1, 0, "SystemStepController", system_controller.getSystemStepController());
+  qmlRegisterSingletonInstance("mss", 1, 0, "SystemAutoController", system_controller.getSystemAutoController());
+  qmlRegisterSingletonInstance("mss", 1, 0, "SystemController", &system_controller);
+
+  engine.addImportPath(":/qml");
+  engine.load("qrc:/qml/main.qml");
+
+  QThreadPool::globalInstance()->setMaxThreadCount(1);
+  return app.exec();
 }

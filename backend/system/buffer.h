@@ -22,7 +22,7 @@ namespace mss
       size_t getServiceBidIndex();
       CalendarEntry getRejectBid(const CalendarEntry& entry);
 
-      std::ostream& print(std::ostream& out);
+      BufferResultsStr resultsStr() const;
     private:
       BufferConfig config_;
       std::vector< std::pair< bool, CalendarEntry > > buffer_;

@@ -23,7 +23,7 @@ namespace mss
       bool isFinished();
       bool hasEntries();
 
-      std::ostream& print(std::ostream& out);
+      CalendarResultsStr resultsStr() const;
     private:
       std::vector< CalendarEntry* > calendar_;
       std::unique_ptr< CalendarEntry > end_entry_;

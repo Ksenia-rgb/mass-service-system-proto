@@ -1,7 +1,5 @@
 #include "buffer.h"
 
-#include <iostream>
-
 mss::base::Buffer::Buffer(const BufferConfig& config):
   config_(config),
   buffer_(config.cap, {false, {}}),
@@ -62,14 +60,9 @@ size_t mss::base::Buffer::selectPlace()
   // Дисциплина буферизации:
   // - Заполнение буффера по кольцу
 
-  if (!buffer_[index_ptr_].first)
+  for (size_t k = 0; k < buffer_.size(); k++)
   {
-    size_t index_res = index_ptr_;
-    index_ptr_ = (index_ptr_ + 1) % buffer_.size();
-    return index_res;
-  }
-  for (size_t i = (index_ptr_ + 1) % buffer_.size(); i != index_ptr_; i++)
-  {
+    size_t i = (index_ptr_ + k) % buffer_.size();
     if (!buffer_[i].first)
     {
       index_ptr_ = (i + 1) % buffer_.size();
@@ -140,28 +133,23 @@ size_t mss::base::Buffer::selectRejectBid()
   return res;
 }
 
-std::ostream& mss::base::Buffer::print(std::ostream& out)
+mss::BufferResultsStr mss::base::Buffer::resultsStr() const
 {
-  if (buffer_[0].first)
+  BufferResultsStr res(buffer_.size());
+  for (size_t i = 0; i < buffer_.size(); i++)
   {
-    buffer_[0].second.print(out);
-  }
-  else
-  {
-    out << 0;
-  }
-
-  for (size_t i = 1; i < buffer_.size(); i++)
-  {
-    out << '\n';
     if (buffer_[i].first)
     {
-      buffer_[i].second.print(out);
+      res[i] = BufferRowResultStr{
+        QString::number(buffer_[i].second.id),
+        QString::number(buffer_[i].second.time.time_sec)
+      };
     }
     else
     {
-      out << 0;
+      res[i] = BufferRowResultStr{"0", "0"};
     }
   }
-  return out;
+
+  return res;
 }
