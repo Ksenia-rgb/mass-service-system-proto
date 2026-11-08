@@ -19,7 +19,7 @@ Page
   signal pushPD()
   signal popPD()
 
-  padding: MssTheme.pageMargin
+  padding: MssTheme.pageMarging
 
   header: MssHeader
   {

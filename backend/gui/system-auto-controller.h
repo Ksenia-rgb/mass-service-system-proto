@@ -2,6 +2,7 @@
 #define SYSTEM_AUTO_CONTROLLER_H
 
 #include <QObject>
+
 #include "backend/system/types.h"
 #include "auto-graphs-table-model.h"
 
@@ -28,10 +29,10 @@ namespace mss
       AutoGraphsDeviceCntTableModel device_cnt_model_;
       AutoGraphsBufferCapTableModel buffer_cap_model_;
 
-      const size_t producer_cnt_diff_ = 1;
-      const size_t device_cnt_diff_ = 1;
-      const size_t buffer_cap_diff_ = 1;
-      const size_t bid_cnt_ = 2;
+      static constexpr size_t producer_cnt_diff_ = 1;
+      static constexpr size_t device_cnt_diff_ = 1;
+      static constexpr size_t buffer_cap_diff_ = 1;
+      static constexpr size_t bid_cnt_ = 20;
 
       void setProducerCntRows(const SystemConfig& config);
       void setDeviceCntRows(const SystemConfig& config);

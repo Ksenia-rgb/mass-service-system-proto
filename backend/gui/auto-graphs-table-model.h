@@ -45,8 +45,8 @@ namespace mss
 
       AutoGraphsProducerCntTableModel(QObject* parent = nullptr);
 
-      int rowCount(const QModelIndex& index) const override;
-      int columnCount(const QModelIndex& index) const override;
+      int rowCount(const QModelIndex& index = QModelIndex()) const override;
+      int columnCount(const QModelIndex& index = QModelIndex()) const override;
       QVariant data(const QModelIndex& index, int role) const override;
       QVariant headerData(int section, Qt::Orientation ori, int role) const override;
       QHash< int, QByteArray > roleNames() const override;
@@ -72,8 +72,8 @@ namespace mss
 
       AutoGraphsDeviceCntTableModel(QObject* parent = nullptr);
 
-      int rowCount(const QModelIndex& index) const override;
-      int columnCount(const QModelIndex& index) const override;
+      int rowCount(const QModelIndex& index = QModelIndex()) const override;
+      int columnCount(const QModelIndex& index = QModelIndex()) const override;
       QVariant data(const QModelIndex& index, int role) const override;
       QVariant headerData(int section, Qt::Orientation ori, int role) const override;
       QHash< int, QByteArray > roleNames() const override;
@@ -99,8 +99,8 @@ namespace mss
 
       AutoGraphsBufferCapTableModel(QObject* parent = nullptr);
 
-      int rowCount(const QModelIndex& index) const override;
-      int columnCount(const QModelIndex& index) const override;
+      int rowCount(const QModelIndex& index = QModelIndex()) const override;
+      int columnCount(const QModelIndex& index = QModelIndex()) const override;
       QVariant data(const QModelIndex& index, int role) const override;
       QVariant headerData(int section, Qt::Orientation ori, int role) const override;
       QHash< int, QByteArray > roleNames() const override;

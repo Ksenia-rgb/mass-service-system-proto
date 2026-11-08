@@ -7,6 +7,6 @@ Label
 {
   font.pixelSize: 16
   font.bold: true
-  leftPadding: MssTheme.pageMargin
+  leftPadding: MssTheme.pageMarging
   topPadding: MssTheme.headerTopPadding
 }

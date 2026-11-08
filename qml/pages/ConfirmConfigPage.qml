@@ -15,7 +15,7 @@ Page
   signal no()
   signal yes()
 
-  padding: MssTheme.pageMargin
+  padding: MssTheme.pageMarging
 
   GridLayout
   {

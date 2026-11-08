@@ -158,7 +158,7 @@ int mss::gui::CustomPlotItem::addSeries(const QString& name, const QColor& color
   g->setPen(QPen(color, 2));
   g->setLineStyle(QCPGraph::lsLine);
   g->setScatterStyle(QCPScatterStyle::ssNone);
-  plot_->legend->setVisible(true);
+  plot_->legend->setVisible(false);
   plot_->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop | Qt::AlignRight);
 
   update();

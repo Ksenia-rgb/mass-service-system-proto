@@ -14,7 +14,7 @@ Page
   signal pushBuffer()
   signal popBuffer()
 
-  padding: MssTheme.pageMargin
+  padding: MssTheme.pageMarging
 
   header: MssHeader
   {

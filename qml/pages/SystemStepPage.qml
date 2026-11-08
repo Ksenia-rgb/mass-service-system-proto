@@ -14,7 +14,7 @@ Page
 
   signal goAuto();
 
-  padding: MssTheme.pageMargin
+  padding: MssTheme.pageMarging
 
   Component.onCompleted:
   {

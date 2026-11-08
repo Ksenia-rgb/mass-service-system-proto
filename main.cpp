@@ -26,5 +26,7 @@ int main(int argc, char* argv[])
 
   engine.addImportPath(":/qml");
   engine.load("qrc:/qml/main.qml");
+
+  QThreadPool::globalInstance()->setMaxThreadCount(1);
   return app.exec();
 }
