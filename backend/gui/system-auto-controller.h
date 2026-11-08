@@ -32,7 +32,7 @@ namespace mss
       static constexpr size_t producer_cnt_diff_ = 1;
       static constexpr size_t device_cnt_diff_ = 1;
       static constexpr size_t buffer_cap_diff_ = 1;
-      static constexpr size_t bid_cnt_ = 20;
+      static constexpr size_t bid_cnt_ = 2000;
 
       void setProducerCntRows(const SystemConfig& config);
       void setDeviceCntRows(const SystemConfig& config);

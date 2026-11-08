@@ -20,5 +20,6 @@
         <file>qml/components/qmldir</file>
         <file>qml/pages/qmldir</file>
         <file>qml/styles/qmldir</file>
+        <file>qml/pages/WelcomePage.qml</file>
     </qresource>
 </RCC>

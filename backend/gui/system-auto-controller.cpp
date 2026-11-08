@@ -2,7 +2,6 @@
 
 #include <QtConcurrent/QtConcurrent>
 #include <QFutureWatcher>
-#include <exception>
 
 #include "backend/system/system.h"
 
@@ -55,7 +54,7 @@ namespace
       {
         system.step();
       }
-      //system.finish();
+      system.finish();
 
       res[i] = ProducerCntRowResult{
         static_cast< int >(cnt),
@@ -82,7 +81,7 @@ namespace
       {
         system.step();
       }
-      //system.finish();
+      system.finish();
 
       res[i] = DeviceCntRowResult{
         static_cast< int >(cnt),
@@ -109,7 +108,7 @@ namespace
       {
         system.step();
       }
-      //system.finish();
+      system.finish();
 
       res[i] = BufferCapRowResult{
         static_cast< int >(cap),
@@ -129,16 +128,7 @@ void mss::gui::SystemAutoController::setProducerCntRows(const SystemConfig& conf
     &QFutureWatcherBase::finished,
     this,
     [this, watcher]() {
-            try {
-              auto res = watcher->result();
-              qDebug() << "[gui] got rows: " << res.size();
-              producer_cnt_model_.setRows(std::move(res));
-            } catch (const std::exception& e) {
-              qCritical() << "[gui] worker exception: " << e.what();
-            } catch (...) {
-              qCritical() << "[gui] unknown expection";
-            }
-      //producer_cnt_model_.setRows(watcher->result());
+      producer_cnt_model_.setRows(watcher->result());
       watcher->deleteLater();
     }
   );
@@ -155,16 +145,7 @@ void mss::gui::SystemAutoController::setDeviceCntRows(const SystemConfig& config
     &QFutureWatcherBase::finished,
     this,
     [this, watcher]() {
-            try {
-              auto res = watcher->result();
-              qDebug() << "[gui] got rows: " << res.size();
-              device_cnt_model_.setRows(std::move(res));
-            } catch (const std::exception& e) {
-              qCritical() << "[gui] worker exception: " << e.what();
-            } catch (...) {
-              qCritical() << "[gui] unknown expection";
-            }
-      //device_cnt_model_.setRows(watcher->result());
+      device_cnt_model_.setRows(watcher->result());
       watcher->deleteLater();
     }
   );
@@ -181,17 +162,7 @@ void mss::gui::SystemAutoController::setBufferCapRows(const SystemConfig& config
     &QFutureWatcherBase::finished,
     this,
     [this, watcher]() {
-            try {
-              auto res = watcher->result();
-              qDebug() << "[gui] got rows: " << res.size();
-              buffer_cap_model_.setRows(std::move(res));
-            } catch (const std::exception& e) {
-              qCritical() << "[gui] worker exception: " << e.what();
-            } catch (...) {
-              qCritical() << "[gui] unknown expection";
-            }
-
-      //buffer_cap_model_.setRows(watcher->result());
+      buffer_cap_model_.setRows(watcher->result());
       watcher->deleteLater();
     }
   );

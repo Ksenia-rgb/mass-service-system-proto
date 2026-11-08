@@ -60,14 +60,9 @@ size_t mss::base::Buffer::selectPlace()
   // Дисциплина буферизации:
   // - Заполнение буффера по кольцу
 
-  if (!buffer_[index_ptr_].first)
+  for (size_t k = 0; k < buffer_.size(); k++)
   {
-    size_t index_res = index_ptr_;
-    index_ptr_ = (index_ptr_ + 1) % buffer_.size();
-    return index_res;
-  }
-  for (size_t i = (index_ptr_ + 1) % buffer_.size(); i != index_ptr_; i++)
-  {
+    size_t i = (index_ptr_ + k) % buffer_.size();
     if (!buffer_[i].first)
     {
       index_ptr_ = (i + 1) % buffer_.size();

@@ -55,14 +55,9 @@ size_t mss::base::DeviceGang::selectDevice(MssTime system_time)
   // Дисциплина выбора прибора:
   // - Выбор прибора по кольцу
 
-  if (gang_[index_ptr_].isFree(system_time))
+  for (size_t k = 0; k < gang_.size(); k++)
   {
-    size_t index_res = index_ptr_;
-    index_ptr_ = (index_ptr_ + 1) % gang_.size();
-    return index_res;
-  }
-  for (size_t i = (index_ptr_ + 1) % gang_.size(); i != index_ptr_; i++)
-  {
+    size_t i = (index_ptr_ + k) % gang_.size();
     if (gang_[i].isFree(system_time))
     {
       index_ptr_ = (i + 1) % gang_.size();

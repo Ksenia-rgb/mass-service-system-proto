@@ -40,7 +40,7 @@ Page
 
       Layout.row: 0
       Layout.column: 0
-      minValue: 1
+      minValue: MssTheme.minMinCnt
       maxValue: config.cntMax
       defaultValue: config.cntMin
       label: cntStr + ": min"
@@ -54,7 +54,7 @@ Page
       Layout.row: 1
       Layout.column: 0
       minValue: config.cntMin
-      maxValue: 100000
+      maxValue: MssTheme.maxMaxCnt
       defaultValue: config.cntMax
       label: cntStr + ": max"
       onInput: (val) => config.cntMax = val
@@ -79,7 +79,7 @@ Page
 
       Layout.row: 3
       Layout.column: 0
-      minValue: 1.000
+      minValue: MssTheme.minMinTime
       maxValue: config.timeMax
       defaultValue: config.timeMin
       label: timeStr + ": min"
@@ -93,7 +93,7 @@ Page
       Layout.row: 4
       Layout.column: 0
       minValue: config.timeMin
-      maxValue: 100000.000
+      maxValue: MssTheme.maxMaxTime
       defaultValue: config.timeMax
       label: timeStr + ": max"
       onInput: (val) => config.timeMax = val
@@ -105,8 +105,8 @@ Page
 
       Layout.row: 5
       Layout.column: 0
-      minValue: 1.000
-      maxValue: 100000.000
+      minValue: MssTheme.minRate
+      maxValue: MssTheme.maxRate
       defaultValue: config.rate
       label: rateStr
       onInput: (val) => config.rate = val

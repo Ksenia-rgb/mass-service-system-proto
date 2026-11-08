@@ -1,8 +1,6 @@
 #ifndef CALENDARENTRY_H
 #define CALENDARENTRY_H
 
-#include <iostream>
-
 #include "msstime.h"
 
 namespace mss

@@ -35,7 +35,7 @@ Page
 
       Layout.row: 0
       Layout.column: 0
-      minValue: 1
+      minValue: MssTheme.minMinBufferCap
       maxValue: config.capMax
       defaultValue: config.capMin
       label: "Enter buffer capacity: min"
@@ -49,7 +49,7 @@ Page
       Layout.row: 1
       Layout.column: 0
       minValue: config.capMin
-      maxValue: 100000
+      maxValue: MssTheme.maxMaxBufferCap
       defaultValue: config.capMax
       label: "Enter buffer capacity"
       onInput: (val) => config.capMax = val

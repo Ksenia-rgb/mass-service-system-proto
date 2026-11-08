@@ -20,7 +20,7 @@ Page
     text: "System auto results"
   }
 
-  /*GridLayout
+  GridLayout
   {
     anchors.fill: parent
     rows: 3
@@ -252,5 +252,5 @@ Page
       plotBufferCapWorkload.rescaleAxes()
       plotBufferCapWorkload.replot()
     }
-  }*/
+  }
 }

@@ -20,7 +20,16 @@ Window
 
     anchors.fill: parent
     focus: true
-    initialItem: producerConfigPage
+    initialItem: welcomePage
+
+    Component
+    {
+      id: welcomePage
+      WelcomePage
+      {
+        onStart: stack.push(producerConfigPage)
+      }
+    }
 
     Component
     {
