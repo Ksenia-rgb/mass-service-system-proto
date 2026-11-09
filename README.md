@@ -86,10 +86,22 @@
 
 ## Screenshots
 
-| Старт | Пример конфигурации | Подтверждение конфигурации |
-|---|---|---|
-| ![Start](docs/screenshots/01-start.jpg) | ![Config](docs/screenshots/02-config.jpg) | ![Confirm](docs/screenshots/03-confirm.jpg)
+- Старт
 
-| Пошаговый режим | Результаты автоматического режима |
-|---|---|
-| ![Step](docs/screenshots/04-step.jpg) | ![Auto](docs/screenshots/05-auto.jpg) |
+![Start](docs/screenshots/01-start.jpg)
+
+- Пример конфигурации
+
+![Config](docs/screenshots/02-config.jpg)
+
+- Подтверждение конфигурации
+
+![Confirm](docs/screenshots/03-confirm.jpg)
+
+- Пошаговый режим
+
+![Step](docs/screenshots/04-step.jpg)
+
+- Результаты автоматического режима
+
+![Auto](docs/screenshots/05-auto.jpg)
