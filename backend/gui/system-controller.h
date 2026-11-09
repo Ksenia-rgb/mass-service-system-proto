@@ -1,6 +1,8 @@
 #ifndef SYSTEM_CONTROLLER_H
 #define SYSTEM_CONTROLLER_H
 
+#include "pd-config-controller.h"
+#include "buffer-config-controller.h"
 #include "system-step-controller.h"
 #include "system-auto-controller.h"
 

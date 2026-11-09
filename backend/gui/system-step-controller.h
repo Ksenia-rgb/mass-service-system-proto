@@ -5,8 +5,6 @@
 #include <QAbstractTableModel>
 
 #include "backend/system/system.h"
-#include "pd-config-controller.h"
-#include "buffer-config-controller.h"
 #include "calendar-table-model.h"
 #include "buffer-table-model.h"
 

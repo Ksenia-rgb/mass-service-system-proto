@@ -10,7 +10,7 @@ int mss::gui::AutoGraphsProducerCntTableModel::rowCount(const QModelIndex& index
 
 int mss::gui::AutoGraphsProducerCntTableModel::columnCount(const QModelIndex& index) const
 {
-  return Roles::AvgWorkload - Qt::UserRole;
+  return Roles::AvgWorkloadRole - Qt::UserRole;
 }
 
 QVariant mss::gui::AutoGraphsProducerCntTableModel::data(const QModelIndex& index, int role) const
@@ -37,7 +37,7 @@ QVariant mss::gui::AutoGraphsProducerCntTableModel::data(const QModelIndex& inde
   case Roles::ProducerCntRole: return row.producer_cnt;
   case Roles::AvgRejectProbRole: return row.res_row.avg_reject_prob;
   case Roles::AvgTimeInSystemRole: return row.res_row.avg_time_in_system;
-  case Roles::AvgWorkload: return row.res_row.avg_workload;
+  case Roles::AvgWorkloadRole: return row.res_row.avg_workload;
   default: return {};
   }
 }
@@ -66,7 +66,7 @@ QHash< int, QByteArray > mss::gui::AutoGraphsProducerCntTableModel::roleNames() 
     {Roles::ProducerCntRole, "producerCnt"},
     {Roles::AvgRejectProbRole, "avgRejectProb"},
     {Roles::AvgTimeInSystemRole, "avgTimeInSystem"},
-    {Roles::AvgWorkload, "avgWorkload"}
+    {Roles::AvgWorkloadRole, "avgWorkload"}
   };
 }
 
@@ -87,7 +87,7 @@ int mss::gui::AutoGraphsDeviceCntTableModel::rowCount(const QModelIndex& index) 
 
 int mss::gui::AutoGraphsDeviceCntTableModel::columnCount(const QModelIndex& index) const
 {
-  return Roles::AvgWorkload - Qt::UserRole;
+  return Roles::AvgWorkloadRole - Qt::UserRole;
 }
 
 QVariant mss::gui::AutoGraphsDeviceCntTableModel::data(const QModelIndex& index, int role) const
@@ -114,7 +114,7 @@ QVariant mss::gui::AutoGraphsDeviceCntTableModel::data(const QModelIndex& index,
   case Roles::DeviceCntRole: return row.device_cnt;
   case Roles::AvgRejectProbRole: return row.res_row.avg_reject_prob;
   case Roles::AvgTimeInSystemRole: return row.res_row.avg_time_in_system;
-  case Roles::AvgWorkload: return row.res_row.avg_workload;
+  case Roles::AvgWorkloadRole: return row.res_row.avg_workload;
   default: return {};
   }
 }
@@ -143,7 +143,7 @@ QHash< int, QByteArray > mss::gui::AutoGraphsDeviceCntTableModel::roleNames() co
     {Roles::DeviceCntRole, "deviceCnt"},
     {Roles::AvgRejectProbRole, "avgRejectProb"},
     {Roles::AvgTimeInSystemRole, "avgTimeInSystem"},
-    {Roles::AvgWorkload, "avgWorkload"}
+    {Roles::AvgWorkloadRole, "avgWorkload"}
   };
 }
 
@@ -164,7 +164,7 @@ int mss::gui::AutoGraphsBufferCapTableModel::rowCount(const QModelIndex& index) 
 
 int mss::gui::AutoGraphsBufferCapTableModel::columnCount(const QModelIndex& index) const
 {
-  return Roles::AvgWorkload - Qt::UserRole;
+  return Roles::AvgWorkloadRole - Qt::UserRole;
 }
 
 QVariant mss::gui::AutoGraphsBufferCapTableModel::data(const QModelIndex& index, int role) const
@@ -191,7 +191,7 @@ QVariant mss::gui::AutoGraphsBufferCapTableModel::data(const QModelIndex& index,
   case Roles::BufferCapRole: return row.buffer_cap;
   case Roles::AvgRejectProbRole: return row.res_row.avg_reject_prob;
   case Roles::AvgTimeInSystemRole: return row.res_row.avg_time_in_system;
-  case Roles::AvgWorkload: return row.res_row.avg_workload;
+  case Roles::AvgWorkloadRole: return row.res_row.avg_workload;
   default: return {};
   }
 }
@@ -220,7 +220,7 @@ QHash< int, QByteArray > mss::gui::AutoGraphsBufferCapTableModel::roleNames() co
     {Roles::BufferCapRole, "bufferCap"},
     {Roles::AvgRejectProbRole, "avgRejectProb"},
     {Roles::AvgTimeInSystemRole, "avgTimeInSystem"},
-    {Roles::AvgWorkload, "avgWorkload"}
+    {Roles::AvgWorkloadRole, "avgWorkload"}
   };
 }
 

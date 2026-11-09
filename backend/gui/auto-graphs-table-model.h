@@ -39,7 +39,7 @@ namespace mss
         ProducerCntRole = Qt::UserRole + 1,
         AvgRejectProbRole,
         AvgTimeInSystemRole,
-        AvgWorkload
+        AvgWorkloadRole
       };
       Q_ENUM(Roles);
 
@@ -66,7 +66,7 @@ namespace mss
         DeviceCntRole = Qt::UserRole + 1,
         AvgRejectProbRole,
         AvgTimeInSystemRole,
-        AvgWorkload
+        AvgWorkloadRole
       };
       Q_ENUM(Roles);
 
@@ -93,7 +93,7 @@ namespace mss
         BufferCapRole = Qt::UserRole + 1,
         AvgRejectProbRole,
         AvgTimeInSystemRole,
-        AvgWorkload
+        AvgWorkloadRole
       };
       Q_ENUM(Roles);
 
