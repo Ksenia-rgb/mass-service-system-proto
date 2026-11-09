@@ -88,20 +88,20 @@
 
 - Старт
 
-<img src="docs/screenshots/01-start.png" width="450" />
+<img src="docs/screenshots/01-start.jpg" width="450" />
 
 - Пример конфигурации
 
-<img src="docs/screenshots/02-config.png" width="450" />
+<img src="docs/screenshots/02-config.jpg" width="450" />
 
 - Подтверждение конфигурации
 
-<img src="docs/screenshots/03-confirm.png" width="450" />
+<img src="docs/screenshots/03-confirm.jpg" width="450" />
 
 - Пошаговый режим
 
-<img src="docs/screenshots/04-step.png" width="450" />
+<img src="docs/screenshots/04-step.jpg" width="450" />
 
 - Результаты автоматического режима
 
-<img src="docs/screenshots/05-auto.png" width="450" />
+<img src="docs/screenshots/05-auto.jpg" width="450" />
