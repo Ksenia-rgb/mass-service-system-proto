@@ -19,6 +19,21 @@ QString mss::gui::SystemStepController::getSystemTime() const
   return system_time_;
 }
 
+QString mss::gui::SystemStepController::getAvgRejectProb() const
+{
+  return avg_reject_prob_;
+}
+
+QString mss::gui::SystemStepController::getAvgTimeInSystem() const
+{
+  return avg_time_in_system_;
+}
+
+QString mss::gui::SystemStepController::getAvgWorkload() const
+{
+  return avg_workload_;
+}
+
 void mss::gui::SystemStepController::setSystemConfig(const SystemConfig& config)
 {
   config_ = config;
@@ -38,6 +53,13 @@ void mss::gui::SystemStepController::step()
 void mss::gui::SystemStepController::finish()
 {
   setRows(system_.finish());
+  avg_reject_prob_ = QString::number(system_.getAvgRejectProb());
+  avg_time_in_system_ = QString::number(system_.getAvgTimeInSystem());
+  avg_workload_ = QString::number(system_.getAvgWorkload());
+
+  emit avgRejectProbChanged(avg_reject_prob_);
+  emit avgTimeInSystemChanged(avg_time_in_system_);
+  emit avgWorkloadChanged(avg_workload_);
 }
 
 void mss::gui::SystemStepController::setRows(const SystemResultsStr& res)

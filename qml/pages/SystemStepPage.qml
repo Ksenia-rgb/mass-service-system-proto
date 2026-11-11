@@ -31,7 +31,7 @@ Page
   {
     anchors.fill: parent
 
-    rows: 4
+    rows: 5
     columns: 2
     rowSpacing: 10
     columnSpacing: 10
@@ -66,9 +66,30 @@ Page
       modelObject: systemStepController.bufferModel
     }
 
-    RowLayout
+    ColumnLayout
     {
       Layout.row: 2
+      Layout.column: 0
+      Layout.columnSpan: 2
+      spacing: 0
+
+      Label
+      {
+        text: "Average reject probability: " + systemStepController.avgRejectProb
+      }
+      Label
+      {
+        text: "Average bid time in system: " + systemStepController.avgTimeInSystem
+      }
+      Label
+      {
+        text: "Average devices workload: " + systemStepController.avgWorkload
+      }
+    }
+
+    RowLayout
+    {
+      Layout.row: 3
       Layout.column: 0
       Layout.columnSpan: 2
 
@@ -148,7 +169,7 @@ Page
     {
       id: autoButton
 
-      Layout.row: 3
+      Layout.row: 4
       Layout.column: 0
       Layout.columnSpan: 2
       Layout.fillWidth: true
